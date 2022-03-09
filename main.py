@@ -1,29 +1,33 @@
 #New Comment for SlopeStrikeApp
 
-#def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    #print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-#if __name__ == '__main__':
-    #print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
-
 print ('Greetings user. Prepare to SlopeStrike!')
 
-import random
-Tx = random.randint(-10, 10)
-Ty = random.randint(-10, 10)
-print(f'Target lock at coordinates ({Tx},{Ty}).')
-Lx = random.randint(0, 0)
-Ly = random.randint(0, 0)
-print(f'Launcher location: ({Lx},{Ly}).')
-mrise = int(input("Enter the appropriate rise:"))
-mrun = int(input("Enter the appropriate run:"))
-print(f'You entered {mrise}/{mrun}.')
-if (Ty) == (Tx) * (mrise) / (mrun):
-    print(f'HIT!')
-else:
-    print(f'MISS!')
+score = 0
+lives = 3
+while lives > 0:
+
+    # Generate and print two random points, a target, Txy, and a Launch location, Lxy
+    import random
+    Tx = random.randint(1, 10)
+    Ty = random.randint(1, 10)
+    print(f'Target lock at coordinates ({Tx},{Ty}).')
+    Lx = random.randint(0, 0)
+    Ly = random.randint(0, 0)
+    print(f'Launcher location: ({Lx},{Ly}).')
+
+    # Prompts user for two inputs to form a ratio
+    mrise = int(input("Enter the appropriate rise:"))
+    mrun = int(input("Enter the approriate run:"))
+    print(f'You entered {mrise}/{mrun}.')
+
+    # Verifies if the inputted slope forms a line that intersects the Launch and Target locations
+    if (Ty) - (Ly) == ((Tx) - (Lx)) * (mrise) / (mrun):
+        print(f'HIT!')
+        score = score + 10
+        print(f'Current Score: {score}')
+    else:
+        print(f'MISS!')
+        lives = lives - 1
+        print(f'Current Score: {score}')
+
+print(f'Game Over. Final Score: {score}')
