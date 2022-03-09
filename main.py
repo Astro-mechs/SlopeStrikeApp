@@ -1,8 +1,4 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
+#New Comment for SlopeStrikeApp
 
 #def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -25,7 +21,7 @@ Lx = random.randint(0, 0)
 Ly = random.randint(0, 0)
 print(f'Launcher location: ({Lx},{Ly}).')
 mrise = int(input("Enter the appropriate rise:"))
-mrun = int(input("Enter the approriate run:"))
+mrun = int(input("Enter the appropriate run:"))
 print(f'You entered {mrise}/{mrun}.')
 if (Ty) == (Tx) * (mrise) / (mrun):
     print(f'HIT!')
