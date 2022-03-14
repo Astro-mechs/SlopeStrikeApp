@@ -100,10 +100,10 @@ while running:
         player(playerImg, playerx, playery)
 
         draw_text(screen, 'Target lock at coordinates:', 24, 150, 120, white)
-        draw_text(screen, '(' + str(enemyx_adj) + ',' + str(enemyy_adj) + ')', 32, 150, 140, white)
+        draw_text(screen, '(' + str(int(enemyx_adj)) + ',' + str(int(enemyy_adj)) + ')', 32, 150, 140, white)
 
         draw_text(screen, 'Launcher location:', 24, 150, 180, white)
-        draw_text(screen, '(' + str(playerx_adj) + ',' + str(playery_adj) + ')', 32, 150, 200, white)
+        draw_text(screen, '(' + str(int(playerx_adj)) + ',' + str(int(playery_adj)) + ')', 32, 150, 200, white)
 
         draw_text(screen, hit_miss, 32, 150, 400, hit_miss_color)
         draw_text(screen, game_over_1up, 32, 150, 450, game_over_1up_color)
@@ -124,74 +124,50 @@ while running:
             if mrun != 0:
                 if (enemyy_adj - playery_adj) == (enemyx_adj - playerx_adj) * (mrise / mrun):
                     hit = True
-                    game_over_1up = ''
-                    print(f'HIT!')
-                    hit_miss_color = green
-                    hit_miss = 'HIT!'
-                    score = score + 10
-                    print(f'Current Score: {score}')
-                    print(f'Lives: {lives}')
-                    if score - initialScore == 100:
-                        initialScore = score
-                        lives = lives + 1
-                        game_over_1up_color = green
-                        game_over_1up = '1 UP!'
                 else:
                     hit = False
-                    launch = False
-                    lives = lives - 1
-                    print(f'Current Score: {score}')
-                    print(f'Lives: {lives}')
-                    if lives == 0:
-                        #running = False
-                        gameOver = True
-                        print(f'Game Over. Final Score: {score}')
-                        game_over_1up_color = red
-                        game_over_1up = 'GAME OVER!'
-                    else:
-                        game_over_1up = ''
-                        print(f'MISS!')
-                        hit_miss_color = red
-                        hit_miss = 'MISS!'
             else:
                 if zerorun == 0:
                     hit = True
-                    game_over_1up = ''
-                    print(f'HIT!')
-                    hit_miss_color = green
-                    hit_miss = 'HIT!'
-                    score = score + 10
-                    print(f'Current Score: {score}')
-                    print(f'Lives: {lives}')
-                    if score - initialScore == 100:
-                        initialScore = score
-                        lives = lives + 1
-                        game_over_1up_color = green
-                        game_over_1up = '1 UP!'
                 else:
                     hit = False
-                    launch = False
-                    lives = lives - 1
-                    print(f'Current Score: {score}')
-                    print(f'Lives: {lives}')
-                    if lives == 0:
-                        #running = False
-                        gameOver = True
-                        print(f'Game Over. Final Score: {score}')
-                        game_over_1up_color = red
-                        game_over_1up = 'GAME OVER!'
-                    else:
-                        game_over_1up = ''
-                        print(f'MISS!')
-                        hit_miss_color = red
-                        hit_miss = 'MISS!'
 
-        # check to see if close window is pressed
+        if launch == True and hit == True:
+            game_over_1up = ''
+            print(f'HIT!')
+            hit_miss_color = green
+            hit_miss = 'HIT!'
+            score = score + 10
+            print(f'Current Score: {score}')
+            print(f'Lives: {lives}')
+            if score - initialScore == 100:
+                initialScore = score
+                lives = lives + 1
+                game_over_1up_color = green
+                game_over_1up = '1 UP!'
+        elif launch == True and hit == False:
+            launch = False
+            lives = lives - 1
+            print(f'Current Score: {score}')
+            print(f'Lives: {lives}')
+            if lives == 0:
+                # running = False
+                gameOver = True
+                print(f'Game Over. Final Score: {score}')
+                game_over_1up_color = red
+                game_over_1up = 'GAME OVER!'
+            else:
+                game_over_1up = ''
+                print(f'MISS!')
+                hit_miss_color = red
+                hit_miss = 'MISS!'
+
+        # Check to see if close window is pressed
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
-
+        # Arrow keys to change rise and run values, and Enter key to launch
             elif event.type == pygame.KEYDOWN and gameOver == False:
                 if event.key == pygame.K_LEFT:
                     if mrun > -20:
