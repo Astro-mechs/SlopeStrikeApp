@@ -22,7 +22,7 @@ UIwindow = pygame.transform.scale(UIwindow, (300, 600))
 
 #Colors
 # define the RGB value for white,
-#  green, blue colour .
+# green, blue colour .
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 215, 255)
@@ -50,9 +50,9 @@ enemyImg = pygame.image.load('alien3.png')
 def enemy(enemyImg, enemyx, enemyy):
     screen.blit(enemyImg, (enemyx, enemyy))
 
-print('Greetings user. Prepare to SlopeStrike!')
+# This old print was for the textbased version. Consider printing some instructions in a future version.
+#print('Greetings user. Prepare to SlopeStrike!')
 
-# Game Loop
 score = 0
 initialScore = score
 lives = 3
@@ -65,6 +65,7 @@ launch = True
 hit = True
 gameOver = False
 
+# game loop
 while running:
         # RGB for background color and background image
         screen.fill((0, 0, 0))
@@ -81,7 +82,6 @@ while running:
         draw_text(screen, 'LIVES', 32, 150, 510, white)
         draw_text(screen, str(lives), 64, 150, 535, white)
 
-        # Text-based SlopeStrikeApp
         if launch == True and hit == True and gameOver == False:
             # Generate and print two random points, a target, enemyxy, and a Launch location, playerxy
             enemyx = random.randrange(400, 800, 20)
@@ -96,29 +96,31 @@ while running:
             launch = False
             hit = False
 
+#Spawn player and enemy
         enemy(enemyImg, enemyx, enemyy)
         player(playerImg, playerx, playery)
 
+#Update HUD with current coordinates
         draw_text(screen, 'Target lock at coordinates:', 24, 150, 120, white)
         draw_text(screen, '(' + str(int(enemyx_adj)) + ',' + str(int(enemyy_adj)) + ')', 32, 150, 140, white)
 
         draw_text(screen, 'Launcher location:', 24, 150, 180, white)
         draw_text(screen, '(' + str(int(playerx_adj)) + ',' + str(int(playery_adj)) + ')', 32, 150, 200, white)
 
+#Draw the GREEN hit or the RED miss
         draw_text(screen, hit_miss, 32, 150, 400, hit_miss_color)
+#Draw the RED game over or the GREEN 1up
         draw_text(screen, game_over_1up, 32, 150, 450, game_over_1up_color)
 
         pygame.display.update()
 
-        #print(f'Target lock at coordinates ({enemyx_adj},{enemyy_adj}).')
-        #print(f'Launcher location: ({playerx_adj},{playery_adj}).')
 
         # Prompts user for two inputs to form a ratio
         # mrise = int(input("Enter the appropriate rise:"))
         # mrun = int(input("Enter the approriate run:"))
         # print(f'You entered {mrise}/{mrun}.')
 
-        # Verifies if the inputted slope forms a line that intersects the Launch and Target locations
+        # Verifies if the inputed slope forms a line that intersects the Launch and Target locations
         zerorun = enemyx_adj - playerx_adj
         if launch == True and gameOver == False:
             if mrun != 0:
@@ -134,12 +136,9 @@ while running:
 
         if launch == True and hit == True:
             game_over_1up = ''
-            print(f'HIT!')
             hit_miss_color = green
             hit_miss = 'HIT!'
             score = score + 10
-            print(f'Current Score: {score}')
-            print(f'Lives: {lives}')
             if score - initialScore == 100:
                 initialScore = score
                 lives = lives + 1
@@ -153,12 +152,10 @@ while running:
             if lives == 0:
                 # running = False
                 gameOver = True
-                print(f'Game Over. Final Score: {score}')
                 game_over_1up_color = red
                 game_over_1up = 'GAME OVER!'
             else:
                 game_over_1up = ''
-                print(f'MISS!')
                 hit_miss_color = red
                 hit_miss = 'MISS!'
 
@@ -183,3 +180,4 @@ while running:
                         mrise = mrise - 1
                 elif event.key == pygame.K_RETURN:
                     launch = True
+                    
