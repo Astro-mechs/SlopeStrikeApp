@@ -176,7 +176,7 @@ def campaign():
             zerorun = enemyx_adj - playerx_adj
             if launch == True and gameOver == False:
                 if mrun != 0:
-                    draw_laser()
+                    draw_laser(playerx, playery, mrise, mrun)
                     if (enemyy_adj - playery_adj) == (enemyx_adj - playerx_adj) * (mrise / mrun):
                         hit = True
                     else:
@@ -188,7 +188,7 @@ def campaign():
                         hit = False
 
             if launch == True and hit == True:
-                draw_laser()
+                draw_laser(playerx, playery, mrise, mrun)
                 game_over_1up = ''
                 hit_miss_color = green
                 hit_miss = 'HIT!'
@@ -199,7 +199,7 @@ def campaign():
                     game_over_1up_color = green
                     game_over_1up = '1 UP!'
             elif launch == True and hit == False:
-                draw_laser()
+                draw_laser(playerx, playery, mrise, mrun)
                 launch = False
                 lives = lives - 1
                 print(f'Current Score: {score}')
@@ -260,7 +260,7 @@ def tutorial():
         pygame.display.update()
 
 #lazer boundary testing and firing
-def draw_laser():
+def draw_laser(playerx, playery, mrise, mrun):
     #convert pixel locations to cartesian
     px = playerx / 20 - 29
     py = -1 * (playery / 20 - 14)
