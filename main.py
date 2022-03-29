@@ -50,6 +50,8 @@ enemyImg = pygame.image.load('alien3.png')
 def enemy(enemyImg, enemyx, enemyy):
     screen.blit(enemyImg, (enemyx, enemyy))
 
+
+
 # This old print was for the textbased version. Consider printing some instructions in a future version.
 #print('Greetings user. Prepare to SlopeStrike!')
 
@@ -174,6 +176,7 @@ def campaign():
             zerorun = enemyx_adj - playerx_adj
             if launch == True and gameOver == False:
                 if mrun != 0:
+                    draw_laser()
                     if (enemyy_adj - playery_adj) == (enemyx_adj - playerx_adj) * (mrise / mrun):
                         hit = True
                     else:
@@ -185,6 +188,7 @@ def campaign():
                         hit = False
 
             if launch == True and hit == True:
+                draw_laser()
                 game_over_1up = ''
                 hit_miss_color = green
                 hit_miss = 'HIT!'
@@ -195,6 +199,7 @@ def campaign():
                     game_over_1up_color = green
                     game_over_1up = '1 UP!'
             elif launch == True and hit == False:
+                draw_laser()
                 launch = False
                 lives = lives - 1
                 print(f'Current Score: {score}')
@@ -253,6 +258,70 @@ def tutorial():
                     running = False
 
         pygame.display.update()
+
+#lazer boundary testing and firing
+def draw_laser():
+    #convert pixel locations to cartesian
+    px = playerx / 20 - 29
+    py = -1 * (playery / 20 - 14)
+    #determine coordinates of laser intersection with boundary of coordinate plane
+    if mrise != 0 and mrun != 0:
+         if mrise > 0 and mrun > 0:
+             bx = (mrun/mrise) * (15 - py) + px
+             round(bx)
+             if bx >= -15 and bx <=15:
+                by = 15
+             else:
+                bx = 15
+                by = (mrise/mrun) * (bx - px) + py
+                round(by)
+         elif mrise < 0 and mrun < 0:
+             bx = (mrun / mrise) * (-15 - py) + px
+             round(bx)
+             if bx >= -15 and bx <= 15:
+                by = -15
+             else:
+                bx = -15
+                by = (mrise / mrun) * (bx - px) + py
+                round(by)
+         elif mrise > 0 and mrun < 0:
+                bx = (mrun/mrise) * (15 - py) + px
+                round(bx)
+                if bx >= -15 and bx <=15:
+                    by = 15
+                else:
+                    bx = -15
+                    by = (mrise/mrun) * (bx-px) + py
+                    round(by)
+         elif mrise < 0 and mrun > 0:
+                bx = (mrun / mrise) * (-15 - py) + px
+                round(bx)
+                if bx >= -15 and bx <= 15:
+                    by = -15
+                else:
+                    bx = 15
+                    by = (mrise / mrun) * (bx - px) + py
+                    round(by)
+    elif mrise == 0 and mrun != 0:
+         if mrun > 0:
+             bx = 15
+             by = py
+         else:
+             bx = -15
+             by = py
+    elif mrise != 0 and mrun == 0:
+         if mrise > 0:
+             bx = px
+             by = 15
+         else:
+             bx = px
+             by = -15
+    bdryx = 600 + (bx)* 20
+    bdryy = 300 + -20*(by)
+    pygame.draw.line(screen, green, (playerx + 20, playery + 20),
+                     (bdryx, bdryy), 3)
+    pygame.display.flip()
+    pygame.time.delay(300)
 
 main_menu()
 
