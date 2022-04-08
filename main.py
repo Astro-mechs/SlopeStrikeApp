@@ -50,15 +50,30 @@ enemyImg = pygame.image.load('alien3.png')
 def enemy(enemyImg, enemyx, enemyy):
     screen.blit(enemyImg, (enemyx, enemyy))
 
-
-
-# This old print was for the textbased version. Consider printing some instructions in a future version.
-#print('Greetings user. Prepare to SlopeStrike!')
+#load sound files
+def load_sound(file):
+    sound = pygame.mixer.Sound(file)
+    return sound
+laser_sound = load_sound('laser1.mp3')
+explosion_sound1 = load_sound('explosion1.wav')
+explosion_sound2 = load_sound('explosion2.wav')
+btn1_sound = load_sound('brdgbtn1.wav')
+btn2_sound = load_sound('brdgbtn5.wav')
+btn3_sound = load_sound('brdgbtn3.wav')
+btn4_sound = load_sound('brdgbtn6.wav')
+bridge_sound = load_sound('bridge.wav')
+proceed_sound = load_sound('061.wav')
+menu_sound = load_sound('eprd-bridge.wav')
+campaign_sound = load_sound('211.wav')
+tutorial_sound = load_sound('226.wav')
+quit_sound = load_sound('014.wav')
 
 click = False
 
 # game loops
 def main_menu():
+    proceed_sound.play()
+    menu_sound.play()
     while True:
         screen.fill((0, 0, 0))
         draw_text(screen, 'SLOPE STRIKE!', 120, 450, 150, orange)
@@ -71,12 +86,16 @@ def main_menu():
 
         if button_1.collidepoint((mx, my)):
             if click:
+                campaign_sound.play()
                 campaign()
         if button_2.collidepoint((mx, my)):
             if click:
+                tutorial_sound.play()
                 tutorial()
         if button_3.collidepoint((mx, my)):
             if click:
+                quit_sound.play()
+                pygame.time.wait(2500)
                 pygame.quit()
                 sys.exit()
 
@@ -105,6 +124,7 @@ def main_menu():
         pygame.display.update()
 
 def campaign():
+    bridge_sound.play(loops=5)
     hit_miss_color = (0, 0, 0)
     game_over_1up_color = (0, 0, 0)
     score = 0
@@ -118,6 +138,7 @@ def campaign():
     launch = True
     hit = True
     gameOver = False
+    explosion_type = True
     while running:
             # RGB for background color and background image
             screen.fill((0, 0, 0))
@@ -140,6 +161,8 @@ def campaign():
                 enemyy = random.randrange(100, 400, 20)
                 enemyx_adj = enemyx / 20 - 29
                 enemyy_adj = -1 * (enemyy / 20 - 14)
+                enemyx_expl = enemyx - 54
+                enemyy_expl = enemyy - 44
 
                 playerx = random.randrange(560, 600, 20)
                 playery = random.randrange(260, 300, 20)
@@ -188,7 +211,58 @@ def campaign():
                         hit = False
 
             if launch == True and hit == True:
+                explosion_sprite10 = [pygame.image.load('expl_10_000.png'), pygame.image.load('expl_10_001.png'),
+                                    pygame.image.load('expl_10_002.png'), pygame.image.load('expl_10_003.png'),
+                                    pygame.image.load('expl_10_004.png'), pygame.image.load('expl_10_005.png'),
+                                    pygame.image.load('expl_10_006.png'), pygame.image.load('expl_10_007.png'),
+                                    pygame.image.load('expl_10_008.png'), pygame.image.load('expl_10_009.png'),
+                                    pygame.image.load('expl_10_0010.png'), pygame.image.load('expl_10_0011.png'),
+                                    pygame.image.load('expl_10_0012.png'), pygame.image.load('expl_10_0013.png'),
+                                    pygame.image.load('expl_10_0014.png'), pygame.image.load('expl_10_0015.png'),
+                                    pygame.image.load('expl_10_0016.png'), pygame.image.load('expl_10_0017.png'),
+                                    pygame.image.load('expl_10_0018.png'), pygame.image.load('expl_10_0019.png'),
+                                    pygame.image.load('expl_10_0020.png'), pygame.image.load('expl_10_0021.png'),
+                                    pygame.image.load('expl_10_0022.png'), pygame.image.load('expl_10_0023.png'),
+                                    pygame.image.load('expl_10_0024.png'), pygame.image.load('expl_10_0025.png'),
+                                    pygame.image.load('expl_10_0026.png'), pygame.image.load('expl_10_0027.png'),
+                                    pygame.image.load('expl_10_0028.png'), pygame.image.load('expl_10_0029.png'),
+                                    pygame.image.load('expl_10_0030.png'), pygame.image.load('expl_10_0031.png')]
+                explosion_sprite06 = [pygame.image.load('expl_06_000.png'), pygame.image.load('expl_06_001.png'),
+                                    pygame.image.load('expl_06_002.png'), pygame.image.load('expl_06_003.png'),
+                                    pygame.image.load('expl_06_004.png'), pygame.image.load('expl_06_005.png'),
+                                    pygame.image.load('expl_06_006.png'), pygame.image.load('expl_06_007.png'),
+                                    pygame.image.load('expl_06_008.png'), pygame.image.load('expl_06_009.png'),
+                                    pygame.image.load('expl_06_0010.png'), pygame.image.load('expl_06_0011.png'),
+                                    pygame.image.load('expl_06_0012.png'), pygame.image.load('expl_06_0013.png'),
+                                    pygame.image.load('expl_06_0014.png'), pygame.image.load('expl_06_0015.png'),
+                                    pygame.image.load('expl_06_0016.png'), pygame.image.load('expl_06_0017.png'),
+                                    pygame.image.load('expl_06_0018.png'), pygame.image.load('expl_06_0019.png'),
+                                    pygame.image.load('expl_06_0020.png'), pygame.image.load('expl_06_0021.png'),
+                                    pygame.image.load('expl_06_0022.png'), pygame.image.load('expl_06_0023.png'),
+                                    pygame.image.load('expl_06_0024.png'), pygame.image.load('expl_06_0025.png'),
+                                    pygame.image.load('expl_06_0026.png'), pygame.image.load('expl_06_0027.png'),
+                                    pygame.image.load('expl_06_0028.png'), pygame.image.load('expl_06_0029.png'),
+                                    pygame.image.load('expl_06_0030.png'), pygame.image.load('expl_06_0031.png')]
                 draw_laser(playerx, playery, mrise, mrun)
+                if explosion_type == True:
+                    explosion_value = 1
+                    explosion_sound1.play()
+                    while explosion_value < len(explosion_sprite06):
+                        explosion_image = explosion_sprite06[explosion_value]
+                        screen.blit(explosion_image, (enemyx_expl + 50, enemyy_expl + 30))
+                        pygame.display.update()
+                        explosion_value += 1
+                        pygame.time.delay(50)
+                else:
+                    explosion_value = 1
+                    explosion_sound2.play()
+                    while explosion_value < len(explosion_sprite10):
+                        explosion_image = explosion_sprite10[explosion_value]
+                        screen.blit(explosion_image, (enemyx_expl, enemyy_expl))
+                        pygame.display.update()
+                        explosion_value += 1
+                        pygame.time.delay(30)
+                explosion_type = not explosion_type
                 game_over_1up = ''
                 hit_miss_color = green
                 hit_miss = 'HIT!'
@@ -223,18 +297,23 @@ def campaign():
             # Arrow keys to change rise and run values, and Enter key to launch
                 if event.type == pygame.KEYDOWN and gameOver == False:
                     if event.key == pygame.K_LEFT:
+                        btn1_sound.play()
                         if mrun > -20:
                             mrun = mrun - 1
                     elif event.key == pygame.K_RIGHT:
+                        btn2_sound.play()
                         if mrun < 20:
                             mrun = mrun + 1
                     elif event.key == pygame.K_UP:
+                        btn3_sound.play()
                         if mrise < 20:
                             mrise = mrise + 1
                     elif event.key == pygame.K_DOWN:
+                        btn4_sound.play()
                         if mrise > -20:
                             mrise = mrise - 1
                     elif event.key == pygame.K_RETURN:
+                        laser_sound.play()
                         launch = True
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
