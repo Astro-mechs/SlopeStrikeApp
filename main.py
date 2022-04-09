@@ -73,7 +73,7 @@ click = False
 # game loops
 def main_menu():
     proceed_sound.play()
-    menu_sound.play()
+    menu_sound.play(-1)
     while True:
         screen.fill((0, 0, 0))
         draw_text(screen, 'SLOPE STRIKE!', 120, 450, 150, orange)
@@ -88,10 +88,12 @@ def main_menu():
             if click:
                 campaign_sound.play()
                 campaign()
+                menu_sound.stop()
         if button_2.collidepoint((mx, my)):
             if click:
                 tutorial_sound.play()
                 tutorial()
+                menu_sound.stop()
         if button_3.collidepoint((mx, my)):
             if click:
                 quit_sound.play()
@@ -124,7 +126,7 @@ def main_menu():
         pygame.display.update()
 
 def campaign():
-    bridge_sound.play(loops=5)
+    bridge_sound.play(-1)
     hit_miss_color = (0, 0, 0)
     game_over_1up_color = (0, 0, 0)
     score = 0
@@ -267,6 +269,8 @@ def campaign():
                 hit_miss_color = green
                 hit_miss = 'HIT!'
                 score = score + 10
+                mrun = 0
+                mrise = 0
                 if score - initialScore == 100:
                     initialScore = score
                     lives = lives + 1
@@ -318,6 +322,8 @@ def campaign():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
+                        bridge_sound.stop()
+                        menu_sound.play(-1)
 
 def tutorial():
     running = True
@@ -335,6 +341,7 @@ def tutorial():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+                    menu_sound.play(-1)
 
         pygame.display.update()
 
