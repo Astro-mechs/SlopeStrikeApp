@@ -87,8 +87,8 @@ def main_menu():
         if button_1.collidepoint((mx, my)):
             if click:
                 campaign_sound.play()
-                campaign()
                 menu_sound.stop()
+                campaign()
         if button_2.collidepoint((mx, my)):
             if click:
                 tutorial_sound.play()
