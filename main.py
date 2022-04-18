@@ -16,14 +16,24 @@ pygame.display.set_caption("Slope Strike")
 icon = pygame.image.load('laser-surgery.png')
 pygame.display.set_icon(icon)
 
-#background image coordinate plane
+#screen images
 gridCP = pygame.image.load('Grid3CP.png')
 UIwindow = pygame.image.load("Card X2.png")
 UIwindow = pygame.transform.scale(UIwindow, (300, 600))
 
+amLogo = pygame.image.load("astromechlogo.png")
+amLogo = pygame.transform.scale(amLogo, (400, 125))
+
+mainButton = pygame.image.load('button.png')
+hoverButton = pygame.image.load('button_hover.png')
+
+viewPort = pygame.image.load('viewport.png')
+bridgeMenu = pygame.image.load('bridge.png')
+corridorMenu = pygame.image.load('corridor.png')
+gameTitle = pygame.image.load('title.png')
+
 #Colors
-# define the RGB value for white,
-# green, blue color .
+# define the RGB value for colors
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 215, 255)
@@ -31,9 +41,25 @@ red = (255, 0, 0)
 orange = (255, 215, 0)
 purple = (128, 0, 255)
 
+#Fade function for transitions
+def fade(width, height):
+    fade = pygame.Surface((width, height))
+    fade.fill((0,0,0))
+    for alpha in range(0, 300):
+        fade.set_alpha(alpha)
+        redrawLogo()
+        screen.blit(fade, (0,0))
+        pygame.display.update()
+        pygame.time.delay(5)
+
+def redrawLogo():
+    screen.fill((0, 0, 0))
+    screen.blit(amLogo, (250, 200))
+    draw_text(screen, 'Presents', 60, 450, 350, white)
+
 #Text Function
 def draw_text(surface, text, size, x, y, color):
-    font = pygame.font.Font(pygame.font.match_font('freesansbold.ttf'), size)
+    font = pygame.font.Font(pygame.font.match_font('helvetica.ttf'), size)
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
@@ -67,6 +93,7 @@ menu_sound = load_sound('eprd-bridge.wav')
 campaign_sound = load_sound('211.wav')
 tutorial_sound = load_sound('226.wav')
 quit_sound = load_sound('014.wav')
+logo_sound = load_sound('R2D2.mp3')
 
 click = False
 
@@ -76,13 +103,16 @@ def main_menu():
     menu_sound.play(-1)
     while True:
         screen.fill((0, 0, 0))
-        draw_text(screen, 'SLOPE STRIKE!', 120, 450, 150, orange)
+        screen.blit(bridgeMenu, (0, 0))
+        screen.blit(gameTitle, (100, 150))
+        draw_text(screen, 'Created by JP Fletcher and Anthony Tran 2022', 24, 450, 570, orange)
 
         mx, my = pygame.mouse.get_pos()
 
         button_1 = pygame.Rect(300, 300, 300, 50)
-        button_2 = pygame.Rect(300, 400, 300, 50)
-        button_3 = pygame.Rect(300, 500, 300, 50)
+        button_2 = pygame.Rect(300, 365, 300, 50)
+        button_3 = pygame.Rect(300, 430, 300, 50)
+        button_4 = pygame.Rect(300, 495, 300, 50)
 
         if button_1.collidepoint((mx, my)):
             if click:
@@ -92,21 +122,25 @@ def main_menu():
         if button_2.collidepoint((mx, my)):
             if click:
                 tutorial_sound.play()
-                tutorial()
                 menu_sound.stop()
+                tutorial()
         if button_3.collidepoint((mx, my)):
             if click:
-                quit_sound.play()
-                pygame.time.wait(2500)
-                pygame.quit()
-                sys.exit()
+                #tutorial_sound.play()
+                #menu_sound.stop()
+                settings()
+        if button_4.collidepoint((mx, my)):
+            if click:
+                quit_menu()
 
-        pygame.draw.rect(screen, purple, button_1)
+        screen.blit(mainButton, button_1)
         draw_text(screen, 'CAMPAIGN', 64, 450, 305, white)
-        pygame.draw.rect(screen, purple, button_2)
-        draw_text(screen, 'TUTORIAL', 64, 450, 405, white)
-        pygame.draw.rect(screen, purple, button_3)
-        draw_text(screen, 'QUIT', 64, 450, 505, white)
+        screen.blit(mainButton, button_2)
+        draw_text(screen, 'TUTORIAL', 64, 450, 370, white)
+        screen.blit(mainButton, button_3)
+        draw_text(screen, 'SETTINGS', 64, 450, 435, white)
+        screen.blit(mainButton, button_4)
+        draw_text(screen, 'QUIT', 64, 450, 500, white)
 
         click = False
         for event in pygame.event.get():
@@ -117,11 +151,28 @@ def main_menu():
             # Check to see if ESC key is pressed
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
+                    quit_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
+                    btn1_sound.play()
                     click = True
+            if event.type == pygame.MOUSEMOTION:
+                if button_1.collidepoint((mx, my)):
+                    btn3_sound.play()
+                    screen.blit(hoverButton, button_1)
+                    draw_text(screen, 'CAMPAIGN', 64, 450, 305, blue)
+                if button_2.collidepoint((mx, my)):
+                    btn3_sound.play()
+                    screen.blit(hoverButton, button_2)
+                    draw_text(screen, 'TUTORIAL', 64, 450, 370, blue)
+                if button_3.collidepoint((mx, my)):
+                    btn3_sound.play()
+                    screen.blit(hoverButton, button_3)
+                    draw_text(screen, 'SETTINGS', 64, 450, 435, blue)
+                if button_4.collidepoint((mx, my)):
+                    btn3_sound.play()
+                    screen.blit(hoverButton, button_4)
+                    draw_text(screen, 'QUIT', 64, 450, 500, blue)
 
         pygame.display.update()
 
@@ -201,7 +252,7 @@ def campaign():
             zerorun = enemyx_adj - playerx_adj
             if launch == True and gameOver == False:
                 if mrun != 0:
-                    draw_laser(playerx, playery, mrise, mrun)
+                    draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
                     if (enemyy_adj - playery_adj) == (enemyx_adj - playerx_adj) * (mrise / mrun):
                         hit = True
                     else:
@@ -245,7 +296,7 @@ def campaign():
                                     pygame.image.load('expl_06_0026.png'), pygame.image.load('expl_06_0027.png'),
                                     pygame.image.load('expl_06_0028.png'), pygame.image.load('expl_06_0029.png'),
                                     pygame.image.load('expl_06_0030.png'), pygame.image.load('expl_06_0031.png')]
-                draw_laser(playerx, playery, mrise, mrun)
+                draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
                 if explosion_type == True:
                     explosion_value = 1
                     explosion_sound1.play()
@@ -277,7 +328,7 @@ def campaign():
                     game_over_1up_color = green
                     game_over_1up = '1 UP!'
             elif launch == True and hit == False:
-                draw_laser(playerx, playery, mrise, mrun)
+                draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
                 launch = False
                 lives = lives - 1
                 print(f'Current Score: {score}')
@@ -331,6 +382,9 @@ def tutorial():
         screen.fill((0, 0, 0))
         draw_text(screen, 'TUTORIAL', 120, 450, 150, orange)
 
+        button_5 = pygame.Rect(300, 300, 300, 50)
+        button_6 = pygame.Rect(300, 300, 300, 50)
+
         for event in pygame.event.get():
             # Check to see if close window is pressed
             if event.type == pygame.QUIT:
@@ -345,11 +399,87 @@ def tutorial():
 
         pygame.display.update()
 
+def settings():
+    running = True
+    while running:
+        screen.fill((0, 0, 0))
+        screen.blit(viewPort, (0, 0))
+        draw_text(screen, 'SETTINGS', 120, 450, 150, orange)
+
+        for event in pygame.event.get():
+            # Check to see if close window is pressed
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+            # Check to see if ESC key is pressed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                    #menu_sound.play(-1)
+
+        pygame.display.update()
+
+def quit_menu():
+    running = True
+    while running:
+        screen.fill((0, 0, 0))
+        screen.blit(corridorMenu, (0, 0))
+        draw_text(screen, 'Are you sure you want to quit?', 60, 450, 150, orange)
+
+        mx, my = pygame.mouse.get_pos()
+
+        button_5 = pygame.Rect(100, 300, 300, 50)
+        button_6 = pygame.Rect(500, 300, 300, 50)
+
+        if button_5.collidepoint((mx, my)):
+            if click:
+                quit_sound.play()
+                pygame.time.wait(2500)
+                pygame.quit()
+                sys.exit()
+        if button_6.collidepoint((mx, my)):
+            if click:
+                running = False
+
+        screen.blit(mainButton, button_5)
+        draw_text(screen, 'YES', 64, 250, 305, white)
+        screen.blit(mainButton, button_6)
+        draw_text(screen, 'NO', 64, 650, 305, white)
+
+        click = False
+        for event in pygame.event.get():
+            # Check to see if close window is pressed
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.quit()
+            # Check to see if ESC key is pressed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    btn1_sound.play()
+                    click = True
+            if event.type == pygame.MOUSEMOTION:
+                if button_5.collidepoint((mx, my)):
+                    btn3_sound.play()
+                    screen.blit(hoverButton, button_5)
+                    draw_text(screen, 'YES', 64, 250, 305, blue)
+                if button_6.collidepoint((mx, my)):
+                    btn3_sound.play()
+                    screen.blit(hoverButton, button_6)
+                    draw_text(screen, 'NO', 64, 650, 305, blue)
+
+        pygame.display.update()
+
 #lazer boundary testing and firing
-def draw_laser(playerx, playery, mrise, mrun):
+def draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy):
     #convert pixel locations to cartesian
     px = playerx / 20 - 29
     py = -1 * (playery / 20 - 14)
+    ex = enemyx / 20 - 29
+    ey = -1 * (enemyy / 20 - 14)
     #determine coordinates of laser intersection with boundary of coordinate plane
     if mrise != 0 and mrun != 0:
          if mrise > 0 and mrun > 0:
@@ -402,12 +532,26 @@ def draw_laser(playerx, playery, mrise, mrun):
          else:
              bx = px
              by = -15
+    elif mrise == 0 and mrun == 0:
+         if  ey > py:
+             bx = px
+             by = 15
+         else:
+             bx = px
+             by = -15
     bdryx = 600 + (bx)* 20
     bdryy = 300 + -20*(by)
     pygame.draw.line(screen, green, (playerx + 20, playery + 20),
                      (bdryx, bdryy), 3)
     pygame.display.flip()
     pygame.time.delay(300)
+
+#Load screen stuff
+redrawLogo()
+pygame.display.update()
+pygame.time.delay(3000)
+logo_sound.play()
+fade(900,600)
 
 main_menu()
 
