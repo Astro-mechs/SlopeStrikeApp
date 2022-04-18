@@ -39,14 +39,13 @@ def draw_text(surface, text, size, x, y, color):
     text_rect.midtop = (x, y)
     surface.blit(text_surface, text_rect)
 
-# Player
+#Player Draw Function
 playerImg = pygame.image.load('ufo.png')
 def player(playerImg, playerx, playery):
     screen.blit(playerImg, (playerx, playery))
 
-# Enemy
+#Enemy Draw Function
 enemyImg = pygame.image.load('alien3.png')
-#enemyImg = pygame.transform.scale(enemyImg, (20, 20))
 def enemy(enemyImg, enemyx, enemyy):
     screen.blit(enemyImg, (enemyx, enemyy))
 
