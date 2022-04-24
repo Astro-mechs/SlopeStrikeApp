@@ -2,10 +2,6 @@ import pygame
 import random
 import sys
 
-# import pygame.locals for easier
-# access to key coordinates
-from pygame.locals import *
-# Initialize pygame
 pygame.init()
 
 # create the screen
@@ -16,7 +12,7 @@ pygame.display.set_caption("Slope Strike")
 icon = pygame.image.load('laser-surgery.png')
 pygame.display.set_icon(icon)
 
-#screen images
+# background image coordinate plane
 gridCP = pygame.image.load('Grid3CP.png')
 UIwindow = pygame.image.load("Card X2.png")
 UIwindow = pygame.transform.scale(UIwindow, (300, 600))
@@ -65,17 +61,15 @@ def draw_text(surface, text, size, x, y, color):
     text_rect.midtop = (x, y)
     surface.blit(text_surface, text_rect)
 
-#Player Draw Function
+# Load Player and Enemy Images
 playerImg = pygame.image.load('ufo.png')
+enemyImg = pygame.image.load('alien3.png')
 def player(playerImg, playerx, playery):
     screen.blit(playerImg, (playerx, playery))
-
-#Enemy Draw Function
-enemyImg = pygame.image.load('alien3.png')
 def enemy(enemyImg, enemyx, enemyy):
     screen.blit(enemyImg, (enemyx, enemyy))
 
-#load sound files
+# load sound files
 def load_sound(file):
     sound = pygame.mixer.Sound(file)
     return sound
