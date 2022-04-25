@@ -88,6 +88,131 @@ tutorial_sound = load_sound('226.wav')
 quit_sound = load_sound('014.wav')
 logo_sound = load_sound('R2D2.mp3')
 
+#Function to define locations for Player and Enemy LEVEL 1
+def generate_playerandenemy1():
+    global enemyx
+    global enemyy
+    global enemyx_adj
+    global enemyy_adj
+    global enemyx_expl
+    global enemyy_expl
+    global playerx
+    global playery
+    global playerx_adj
+    global playery_adj
+    enemyx = random.randrange(600, 760, 20)
+    enemyy = random.randrange(80, 280, 20)
+    enemyx_adj = enemyx / 20 - 29
+    enemyy_adj = -1 * (enemyy / 20 - 14)
+    enemyx_expl = enemyx - 54
+    enemyy_expl = enemyy - 44
+    playerx = 580
+    playery = 280
+    playerx_adj = playerx / 20 - 29
+    playery_adj = -1 * (playery / 20 - 14)
+
+#Function to define locations for Player and Enemy LEVEL 2
+def generate_playerandenemy2():
+    global enemyx
+    global enemyy
+    global enemyx_adj
+    global enemyy_adj
+    global enemyx_expl
+    global enemyy_expl
+    global playerx
+    global playery
+    global playerx_adj
+    global playery_adj
+    enemyx = random.randrange(420, 760, 20)
+    enemyy = random.randrange(80, 500, 20)
+    enemyx_adj = enemyx / 20 - 29
+    enemyy_adj = -1 * (enemyy / 20 - 14)
+    enemyx_expl = enemyx - 54
+    enemyy_expl = enemyy - 44
+    playerx = 580
+    playery = 280
+    playerx_adj = playerx / 20 - 29
+    playery_adj = -1 * (playery / 20 - 14)
+
+#Function to define locations for Player and Enemy LEVEL 3
+def generate_playerandenemy3():
+    global enemyx
+    global enemyy
+    global enemyx_adj
+    global enemyy_adj
+    global enemyx_expl
+    global enemyy_expl
+    global playerx
+    global playery
+    global playerx_adj
+    global playery_adj
+    enemyx = random.randrange(420, 760, 20)
+    enemyy = random.randrange(80, 500, 20)
+    enemyx_adj = enemyx / 20 - 29
+    enemyy_adj = -1 * (enemyy / 20 - 14)
+    enemyx_expl = enemyx - 54
+    enemyy_expl = enemyy - 44
+    playerx = random.randrange(480, 680, 20)
+    while playerx == enemyx and playery == enemyy:
+        playerx = random.randrange(480, 680, 20)
+    playery = random.randrange(80, 480, 20)
+    playerx_adj = playerx / 20 - 29
+    playery_adj = -1 * (playery / 20 - 14)
+
+#Function for explosion animation
+def exploding_function(explosion_type):
+    explosion_sprite10 = [pygame.image.load('expl_10_000.png'), pygame.image.load('expl_10_001.png'),
+                          pygame.image.load('expl_10_002.png'), pygame.image.load('expl_10_003.png'),
+                          pygame.image.load('expl_10_004.png'), pygame.image.load('expl_10_005.png'),
+                          pygame.image.load('expl_10_006.png'), pygame.image.load('expl_10_007.png'),
+                          pygame.image.load('expl_10_008.png'), pygame.image.load('expl_10_009.png'),
+                          pygame.image.load('expl_10_0010.png'), pygame.image.load('expl_10_0011.png'),
+                          pygame.image.load('expl_10_0012.png'), pygame.image.load('expl_10_0013.png'),
+                          pygame.image.load('expl_10_0014.png'), pygame.image.load('expl_10_0015.png'),
+                          pygame.image.load('expl_10_0016.png'), pygame.image.load('expl_10_0017.png'),
+                          pygame.image.load('expl_10_0018.png'), pygame.image.load('expl_10_0019.png'),
+                          pygame.image.load('expl_10_0020.png'), pygame.image.load('expl_10_0021.png'),
+                          pygame.image.load('expl_10_0022.png'), pygame.image.load('expl_10_0023.png'),
+                          pygame.image.load('expl_10_0024.png'), pygame.image.load('expl_10_0025.png'),
+                          pygame.image.load('expl_10_0026.png'), pygame.image.load('expl_10_0027.png'),
+                          pygame.image.load('expl_10_0028.png'), pygame.image.load('expl_10_0029.png'),
+                          pygame.image.load('expl_10_0030.png'), pygame.image.load('expl_10_0031.png')]
+    explosion_sprite06 = [pygame.image.load('expl_06_000.png'), pygame.image.load('expl_06_001.png'),
+                          pygame.image.load('expl_06_002.png'), pygame.image.load('expl_06_003.png'),
+                          pygame.image.load('expl_06_004.png'), pygame.image.load('expl_06_005.png'),
+                          pygame.image.load('expl_06_006.png'), pygame.image.load('expl_06_007.png'),
+                          pygame.image.load('expl_06_008.png'), pygame.image.load('expl_06_009.png'),
+                          pygame.image.load('expl_06_0010.png'), pygame.image.load('expl_06_0011.png'),
+                          pygame.image.load('expl_06_0012.png'), pygame.image.load('expl_06_0013.png'),
+                          pygame.image.load('expl_06_0014.png'), pygame.image.load('expl_06_0015.png'),
+                          pygame.image.load('expl_06_0016.png'), pygame.image.load('expl_06_0017.png'),
+                          pygame.image.load('expl_06_0018.png'), pygame.image.load('expl_06_0019.png'),
+                          pygame.image.load('expl_06_0020.png'), pygame.image.load('expl_06_0021.png'),
+                          pygame.image.load('expl_06_0022.png'), pygame.image.load('expl_06_0023.png'),
+                          pygame.image.load('expl_06_0024.png'), pygame.image.load('expl_06_0025.png'),
+                          pygame.image.load('expl_06_0026.png'), pygame.image.load('expl_06_0027.png'),
+                          pygame.image.load('expl_06_0028.png'), pygame.image.load('expl_06_0029.png'),
+                          pygame.image.load('expl_06_0030.png'), pygame.image.load('expl_06_0031.png')]
+    if explosion_type == True:
+        explosion_value = 1
+        explosion_sound1.play()
+        while explosion_value < len(explosion_sprite06):
+            explosion_image = explosion_sprite06[explosion_value]
+            screen.blit(explosion_image, (enemyx_expl + 50, enemyy_expl + 30))
+            pygame.display.update()
+            explosion_value += 1
+            pygame.time.delay(50)
+    else:
+        explosion_value = 1
+        explosion_sound2.play()
+        while explosion_value < len(explosion_sprite10):
+            explosion_image = explosion_sprite10[explosion_value]
+            screen.blit(explosion_image, (enemyx_expl, enemyy_expl))
+            pygame.display.update()
+            explosion_value += 1
+            pygame.time.delay(30)
+
+
 click = False
 
 # game loops
