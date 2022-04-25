@@ -69,11 +69,23 @@ def player(playerImg, playerx, playery):
 def enemy(enemyImg, enemyx, enemyy):
     screen.blit(enemyImg, (enemyx, enemyy))
 
+# load level indicator images
+#level_img = pygame.image.load('level 2.png')
+#levely_change = 10
+#level_show = "ready"
+
+# function for showing a level up
+#def indicate_level(x, y):
+#    global level_show
+#    level_show = "on"
+#    screen.blit(level_img, (x, y))
+
 # load sound files
 def load_sound(file):
     sound = pygame.mixer.Sound(file)
     return sound
 laser_sound = load_sound('laser1.mp3')
+enemylaser_sound = load_sound('laser1a.mp3')
 explosion_sound1 = load_sound('explosion1.wav')
 explosion_sound2 = load_sound('explosion2.wav')
 btn1_sound = load_sound('brdgbtn1.wav')
@@ -87,6 +99,13 @@ campaign_sound = load_sound('211.wav')
 tutorial_sound = load_sound('226.wav')
 quit_sound = load_sound('014.wav')
 logo_sound = load_sound('R2D2.mp3')
+shieldup_sound = load_sound('027.wav')
+warning_sound = load_sound('100.wav')
+danger_sound = load_sound('015.wav')
+lifesupport_sound = load_sound('017.wav')
+deflectorfail_sound = load_sound('020.wav')
+level5song_sound = load_sound('S31-Going Deep.mp3')
+
 
 #Function to define locations for Player and Enemy LEVEL 1
 def generate_playerandenemy1():
@@ -258,7 +277,6 @@ def exploding_function(explosion_type):
             explosion_value += 1
             pygame.time.delay(30)
 
-
 click = False
 
 # game loops
@@ -349,6 +367,8 @@ def campaign():
     multiplier = 1
     lives = 3
     level = 1
+    levelx = 680
+    levely = 180
     mrise = 0
     mrun = 0
     hit_miss = ''
@@ -429,25 +449,30 @@ def campaign():
                 level = level + 1
             if score == 120:
                 level = level + 1
+                level5song_sound.play(3)
             if score - initialScore == 60:
                 initialScore = score
                 lives = lives + 1
                 game_over_1up_color = green
                 game_over_1up = 'Shield UP!'
+                shieldup_sound.play()
             mrun = 0
             mrise = 0
         elif launch == True and hit == False:
             draw_laser(playerx, playery, mrise, mrun)
             launch = False
             lives = lives - 1
+            draw_enemylazer()
             print(f'Current Score: {score}')
             print(f'Shield Level: {lives}')
             if lives == 0:
                 # running = False
+                deflectorfail_sound.play()
                 gameOver = True
                 game_over_1up_color = red
                 game_over_1up = 'GAME OVER!'
             else:
+                danger_sound.play()
                 game_over_1up = ''
                 hit_miss_color = red
                 hit_miss = 'MISS!'
@@ -643,6 +668,13 @@ def draw_laser(playerx, playery, mrise, mrun):
     bdryy = 300 + -20 * (by)
     pygame.draw.line(screen, green, (playerx + 20, playery + 20),
                      (bdryx, bdryy), 3)
+    pygame.display.flip()
+    pygame.time.delay(300)
+
+def draw_enemylazer():
+    enemylaser_sound.play()
+    pygame.draw.line(screen, red, (enemyx + 20, enemyy + 20),
+                     (playerx + 20, playery + 20), 3)
     pygame.display.flip()
     pygame.time.delay(300)
 
