@@ -100,8 +100,8 @@ def generate_playerandenemy1():
     global playery
     global playerx_adj
     global playery_adj
-    enemyx = random.randrange(600, 760, 20)
-    enemyy = random.randrange(80, 280, 20)
+    enemyx = random.randrange(600, 740, 20)
+    enemyy = random.randrange(140, 280, 20)
     enemyx_adj = enemyx / 20 - 29
     enemyy_adj = -1 * (enemyy / 20 - 14)
     enemyx_expl = enemyx - 54
@@ -123,8 +123,8 @@ def generate_playerandenemy2():
     global playery
     global playerx_adj
     global playery_adj
-    enemyx = random.randrange(420, 760, 20)
-    enemyy = random.randrange(80, 500, 20)
+    enemyx = random.randrange(440, 580, 20)
+    enemyy = random.randrange(140, 260, 20)
     enemyx_adj = enemyx / 20 - 29
     enemyy_adj = -1 * (enemyy / 20 - 14)
     enemyx_expl = enemyx - 54
@@ -136,6 +136,52 @@ def generate_playerandenemy2():
 
 #Function to define locations for Player and Enemy LEVEL 3
 def generate_playerandenemy3():
+    global enemyx
+    global enemyy
+    global enemyx_adj
+    global enemyy_adj
+    global enemyx_expl
+    global enemyy_expl
+    global playerx
+    global playery
+    global playerx_adj
+    global playery_adj
+    enemyx = random.randrange(440, 560, 20)
+    enemyy = random.randrange(280, 420, 20)
+    enemyx_adj = enemyx / 20 - 29
+    enemyy_adj = -1 * (enemyy / 20 - 14)
+    enemyx_expl = enemyx - 54
+    enemyy_expl = enemyy - 44
+    playerx = 580
+    playery = 280
+    playerx_adj = playerx / 20 - 29
+    playery_adj = -1 * (playery / 20 - 14)
+
+#Function to define locations for Player and Enemy LEVEL 4
+def generate_playerandenemy4():
+    global enemyx
+    global enemyy
+    global enemyx_adj
+    global enemyy_adj
+    global enemyx_expl
+    global enemyy_expl
+    global playerx
+    global playery
+    global playerx_adj
+    global playery_adj
+    enemyx = random.randrange(580, 740, 20)
+    enemyy = random.randrange(300, 420, 20)
+    enemyx_adj = enemyx / 20 - 29
+    enemyy_adj = -1 * (enemyy / 20 - 14)
+    enemyx_expl = enemyx - 54
+    enemyy_expl = enemyy - 44
+    playerx = 580
+    playery = 280
+    playerx_adj = playerx / 20 - 29
+    playery_adj = -1 * (playery / 20 - 14)
+
+#Function to define locations for Player and Enemy LEVEL 5
+def generate_playerandenemy5():
     global enemyx
     global enemyy
     global enemyx_adj
@@ -300,7 +346,9 @@ def campaign():
     game_over_1up_color = (0, 0, 0)
     score = 0
     initialScore = score
+    multiplier = 1
     lives = 3
+    level = 1
     mrise = 0
     mrun = 0
     hit_miss = ''
@@ -309,190 +357,133 @@ def campaign():
     launch = True
     hit = True
     gameOver = False
+    global explosion_type
     explosion_type = True
     while running:
-            # RGB for background color and background image
-            screen.fill((0, 0, 0))
-            screen.blit(gridCP, (0, 0))
-            screen.blit(UIwindow, (0,0))
+        # RGB for background color and background image
+        screen.fill((0, 0, 0))
+        screen.blit(gridCP, (0, 0))
+        screen.blit(UIwindow, (0, 0))
 
-            # Text
-            draw_text(screen, 'RISE', 72, 110, 250, blue)
-            draw_text(screen, str(mrise), 72, 220, 250, orange)
-            draw_text(screen, 'RUN', 72, 110, 300, blue)
-            draw_text(screen, str(mrun), 72, 220, 300, orange)
-            draw_text(screen, 'SCORE', 32, 150, 30, white)
-            draw_text(screen, str(score), 64, 150, 55, white)
-            draw_text(screen, 'LIVES', 32, 150, 510, white)
-            draw_text(screen, str(lives), 64, 150, 535, white)
+        # Update HUD, player, and enemy
+        if launch == True and hit == True and gameOver == False:
+            if level == 5:
+                generate_playerandenemy5()
+            if level == 4:
+                generate_playerandenemy4()
+            if level == 3:
+                generate_playerandenemy3()
+            if level == 2:
+                generate_playerandenemy2()
+            if level == 1:
+                generate_playerandenemy1()
+            launch = False
+            hit = False
+        draw_text(screen, 'RISE', 72, 110, 250, blue)
+        draw_text(screen, str(mrise), 72, 220, 250, orange)
+        draw_text(screen, 'RUN', 72, 110, 300, blue)
+        draw_text(screen, str(mrun), 72, 220, 300, orange)
+        draw_text(screen, 'LEVEL', 32, 80, 30, white)
+        draw_text(screen, str(level), 64, 80, 65, white)
+        draw_text(screen, 'SCORE', 32, 220, 30, white)
+        draw_text(screen, str(score), 64, 220, 65, white)
+        draw_text(screen, 'SHIELD STRENGTH', 32, 150, 510, white)
+        draw_text(screen, str(lives), 64, 150, 535, white)
+        draw_text(screen, 'Target lock at coordinates:', 24, 150, 120, white)
+        draw_text(screen, '(' + str(int(enemyx_adj)) + ',' + str(int(enemyy_adj)) + ')', 32, 150, 140, white)
+        draw_text(screen, 'Launcher location:', 24, 150, 180, white)
+        draw_text(screen, '(' + str(int(playerx_adj)) + ',' + str(int(playery_adj)) + ')', 32, 150, 200, white)
+        draw_text(screen, hit_miss, 32, 150, 400, hit_miss_color)
+        draw_text(screen, game_over_1up, 32, 150, 450, game_over_1up_color)
+        enemy(enemyImg, enemyx, enemyy)
+        player(playerImg, playerx, playery)
+        pygame.display.update()
 
-            if launch == True and hit == True and gameOver == False:
-                # Generate and print two random points, a target, enemyxy, and a Launch location, playerxy
-                enemyx = random.randrange(400, 800, 20)
-                enemyy = random.randrange(100, 400, 20)
-                enemyx_adj = enemyx / 20 - 29
-                enemyy_adj = -1 * (enemyy / 20 - 14)
-                enemyx_expl = enemyx - 54
-                enemyy_expl = enemyy - 44
-
-                playerx = random.randrange(560, 600, 20)
-                playery = random.randrange(260, 300, 20)
-                playerx_adj = playerx / 20 - 29
-                playery_adj = -1 * (playery / 20 - 14)
-                launch = False
-                hit = False
-
-    #Spawn player and enemy
-            enemy(enemyImg, enemyx, enemyy)
-            player(playerImg, playerx, playery)
-
-    #Update HUD with current coordinates
-            draw_text(screen, 'Target lock at coordinates:', 24, 150, 120, white)
-            draw_text(screen, '(' + str(int(enemyx_adj)) + ',' + str(int(enemyy_adj)) + ')', 32, 150, 140, white)
-
-            draw_text(screen, 'Launcher location:', 24, 150, 180, white)
-            draw_text(screen, '(' + str(int(playerx_adj)) + ',' + str(int(playery_adj)) + ')', 32, 150, 200, white)
-
-    #Draw the GREEN hit or the RED miss
-            draw_text(screen, hit_miss, 32, 150, 400, hit_miss_color)
-    #Draw the RED game over or the GREEN 1up
-            draw_text(screen, game_over_1up, 32, 150, 450, game_over_1up_color)
-
-            pygame.display.update()
-
-
-            # Prompts user for two inputs to form a ratio
-            # mrise = int(input("Enter the appropriate rise:"))
-            # mrun = int(input("Enter the approriate run:"))
-            # print(f'You entered {mrise}/{mrun}.')
-
-            # Verifies if the inputed slope forms a line that intersects the Launch and Target locations
-            zerorun = enemyx_adj - playerx_adj
-            if launch == True and gameOver == False:
-                if mrun != 0:
-                    draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
-                    if (enemyy_adj - playery_adj) == (enemyx_adj - playerx_adj) * (mrise / mrun):
-                        hit = True
-                    else:
-                        hit = False
+        # HIT/MISS Calculation
+        zerorun = enemyx_adj - playerx_adj
+        if launch == True and gameOver == False:
+            if mrun != 0:
+                draw_laser(playerx, playery, mrise, mrun)
+                if (enemyy_adj - playery_adj) == (enemyx_adj - playerx_adj) * (mrise / mrun):
+                    hit = True
                 else:
-                    if zerorun == 0:
-                        hit = True
-                    else:
-                        hit = False
-
-            if launch == True and hit == True:
-                explosion_sprite10 = [pygame.image.load('expl_10_000.png'), pygame.image.load('expl_10_001.png'),
-                                    pygame.image.load('expl_10_002.png'), pygame.image.load('expl_10_003.png'),
-                                    pygame.image.load('expl_10_004.png'), pygame.image.load('expl_10_005.png'),
-                                    pygame.image.load('expl_10_006.png'), pygame.image.load('expl_10_007.png'),
-                                    pygame.image.load('expl_10_008.png'), pygame.image.load('expl_10_009.png'),
-                                    pygame.image.load('expl_10_0010.png'), pygame.image.load('expl_10_0011.png'),
-                                    pygame.image.load('expl_10_0012.png'), pygame.image.load('expl_10_0013.png'),
-                                    pygame.image.load('expl_10_0014.png'), pygame.image.load('expl_10_0015.png'),
-                                    pygame.image.load('expl_10_0016.png'), pygame.image.load('expl_10_0017.png'),
-                                    pygame.image.load('expl_10_0018.png'), pygame.image.load('expl_10_0019.png'),
-                                    pygame.image.load('expl_10_0020.png'), pygame.image.load('expl_10_0021.png'),
-                                    pygame.image.load('expl_10_0022.png'), pygame.image.load('expl_10_0023.png'),
-                                    pygame.image.load('expl_10_0024.png'), pygame.image.load('expl_10_0025.png'),
-                                    pygame.image.load('expl_10_0026.png'), pygame.image.load('expl_10_0027.png'),
-                                    pygame.image.load('expl_10_0028.png'), pygame.image.load('expl_10_0029.png'),
-                                    pygame.image.load('expl_10_0030.png'), pygame.image.load('expl_10_0031.png')]
-                explosion_sprite06 = [pygame.image.load('expl_06_000.png'), pygame.image.load('expl_06_001.png'),
-                                    pygame.image.load('expl_06_002.png'), pygame.image.load('expl_06_003.png'),
-                                    pygame.image.load('expl_06_004.png'), pygame.image.load('expl_06_005.png'),
-                                    pygame.image.load('expl_06_006.png'), pygame.image.load('expl_06_007.png'),
-                                    pygame.image.load('expl_06_008.png'), pygame.image.load('expl_06_009.png'),
-                                    pygame.image.load('expl_06_0010.png'), pygame.image.load('expl_06_0011.png'),
-                                    pygame.image.load('expl_06_0012.png'), pygame.image.load('expl_06_0013.png'),
-                                    pygame.image.load('expl_06_0014.png'), pygame.image.load('expl_06_0015.png'),
-                                    pygame.image.load('expl_06_0016.png'), pygame.image.load('expl_06_0017.png'),
-                                    pygame.image.load('expl_06_0018.png'), pygame.image.load('expl_06_0019.png'),
-                                    pygame.image.load('expl_06_0020.png'), pygame.image.load('expl_06_0021.png'),
-                                    pygame.image.load('expl_06_0022.png'), pygame.image.load('expl_06_0023.png'),
-                                    pygame.image.load('expl_06_0024.png'), pygame.image.load('expl_06_0025.png'),
-                                    pygame.image.load('expl_06_0026.png'), pygame.image.load('expl_06_0027.png'),
-                                    pygame.image.load('expl_06_0028.png'), pygame.image.load('expl_06_0029.png'),
-                                    pygame.image.load('expl_06_0030.png'), pygame.image.load('expl_06_0031.png')]
-                draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
-                if explosion_type == True:
-                    explosion_value = 1
-                    explosion_sound1.play()
-                    while explosion_value < len(explosion_sprite06):
-                        explosion_image = explosion_sprite06[explosion_value]
-                        screen.blit(explosion_image, (enemyx_expl + 50, enemyy_expl + 30))
-                        pygame.display.update()
-                        explosion_value += 1
-                        pygame.time.delay(50)
+                    hit = False
+            else:
+                if zerorun == 0:
+                    hit = True
                 else:
-                    explosion_value = 1
-                    explosion_sound2.play()
-                    while explosion_value < len(explosion_sprite10):
-                        explosion_image = explosion_sprite10[explosion_value]
-                        screen.blit(explosion_image, (enemyx_expl, enemyy_expl))
-                        pygame.display.update()
-                        explosion_value += 1
-                        pygame.time.delay(30)
-                explosion_type = not explosion_type
+                    hit = False
+        if launch == True and hit == True:
+            draw_laser(playerx, playery, mrise, mrun)
+            exploding_function(explosion_type)
+            explosion_type = not explosion_type
+            game_over_1up = ''
+            hit_miss_color = green
+            hit_miss = 'HIT!'
+            score = 10 * multiplier + score
+            if score == 30:
+                level = level + 1
+            if score == 60:
+                level = level + 1
+            if score == 90:
+                level = level + 1
+            if score == 120:
+                level = level + 1
+            if score - initialScore == 60:
+                initialScore = score
+                lives = lives + 1
+                game_over_1up_color = green
+                game_over_1up = 'Shield UP!'
+            mrun = 0
+            mrise = 0
+        elif launch == True and hit == False:
+            draw_laser(playerx, playery, mrise, mrun)
+            launch = False
+            lives = lives - 1
+            print(f'Current Score: {score}')
+            print(f'Shield Level: {lives}')
+            if lives == 0:
+                # running = False
+                gameOver = True
+                game_over_1up_color = red
+                game_over_1up = 'GAME OVER!'
+            else:
                 game_over_1up = ''
-                hit_miss_color = green
-                hit_miss = 'HIT!'
-                score = score + 10
-                mrun = 0
-                mrise = 0
-                if score - initialScore == 100:
-                    initialScore = score
-                    lives = lives + 1
-                    game_over_1up_color = green
-                    game_over_1up = '1 UP!'
-            elif launch == True and hit == False:
-                draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
-                launch = False
-                lives = lives - 1
-                print(f'Current Score: {score}')
-                print(f'Lives: {lives}')
-                if lives == 0:
-                    # running = False
-                    gameOver = True
-                    game_over_1up_color = red
-                    game_over_1up = 'GAME OVER!'
-                else:
-                    game_over_1up = ''
-                    hit_miss_color = red
-                    hit_miss = 'MISS!'
+                hit_miss_color = red
+                hit_miss = 'MISS!'
 
-            # Check to see if close window is pressed
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    pygame.quit()
-                    sys.exit()
+        # Check to see if close window is pressed
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
             # Arrow keys to change rise and run values, and Enter key to launch
-                if event.type == pygame.KEYDOWN and gameOver == False:
-                    if event.key == pygame.K_LEFT:
-                        btn1_sound.play()
-                        if mrun > -20:
-                            mrun = mrun - 1
-                    elif event.key == pygame.K_RIGHT:
-                        btn2_sound.play()
-                        if mrun < 20:
-                            mrun = mrun + 1
-                    elif event.key == pygame.K_UP:
-                        btn3_sound.play()
-                        if mrise < 20:
-                            mrise = mrise + 1
-                    elif event.key == pygame.K_DOWN:
-                        btn4_sound.play()
-                        if mrise > -20:
-                            mrise = mrise - 1
-                    elif event.key == pygame.K_RETURN:
-                        laser_sound.play()
-                        launch = True
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        running = False
-                        bridge_sound.stop()
-                        menu_sound.play(-1)
+            if event.type == pygame.KEYDOWN and gameOver == False:
+                if event.key == pygame.K_LEFT:
+                    btn1_sound.play()
+                    if mrun > -20:
+                        mrun = mrun - 1
+                elif event.key == pygame.K_RIGHT:
+                    btn2_sound.play()
+                    if mrun < 20:
+                        mrun = mrun + 1
+                elif event.key == pygame.K_UP:
+                    btn3_sound.play()
+                    if mrise < 20:
+                        mrise = mrise + 1
+                elif event.key == pygame.K_DOWN:
+                    btn4_sound.play()
+                    if mrise > -20:
+                        mrise = mrise - 1
+                elif event.key == pygame.K_RETURN:
+                    laser_sound.play()
+                    launch = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                    bridge_sound.stop()
+                    menu_sound.play(-1)
 
 def tutorial():
     running = True
@@ -592,73 +583,64 @@ def quit_menu():
         pygame.display.update()
 
 #lazer boundary testing and firing
-def draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy):
-    #convert pixel locations to cartesian
+def draw_laser(playerx, playery, mrise, mrun):
+    # convert pixel locations to cartesian
     px = playerx / 20 - 29
     py = -1 * (playery / 20 - 14)
-    ex = enemyx / 20 - 29
-    ey = -1 * (enemyy / 20 - 14)
-    #determine coordinates of laser intersection with boundary of coordinate plane
+    # determine coordinates of laser intersection with boundary of coordinate plane
     if mrise != 0 and mrun != 0:
-         if mrise > 0 and mrun > 0:
-             bx = (mrun/mrise) * (15 - py) + px
-             round(bx)
-             if bx >= -15 and bx <=15:
+        if mrise > 0 and mrun > 0:
+            bx = (mrun / mrise) * (15 - py) + px
+            round(bx)
+            if bx >= -15 and bx <= 15:
                 by = 15
-             else:
+            else:
                 bx = 15
-                by = (mrise/mrun) * (bx - px) + py
+                by = (mrise / mrun) * (bx - px) + py
                 round(by)
-         elif mrise < 0 and mrun < 0:
-             bx = (mrun / mrise) * (-15 - py) + px
-             round(bx)
-             if bx >= -15 and bx <= 15:
+        elif mrise < 0 and mrun < 0:
+            bx = (mrun / mrise) * (-15 - py) + px
+            round(bx)
+            if bx >= -15 and bx <= 15:
                 by = -15
-             else:
+            else:
                 bx = -15
                 by = (mrise / mrun) * (bx - px) + py
                 round(by)
-         elif mrise > 0 and mrun < 0:
-                bx = (mrun/mrise) * (15 - py) + px
-                round(bx)
-                if bx >= -15 and bx <=15:
-                    by = 15
-                else:
-                    bx = -15
-                    by = (mrise/mrun) * (bx-px) + py
-                    round(by)
-         elif mrise < 0 and mrun > 0:
-                bx = (mrun / mrise) * (-15 - py) + px
-                round(bx)
-                if bx >= -15 and bx <= 15:
-                    by = -15
-                else:
-                    bx = 15
-                    by = (mrise / mrun) * (bx - px) + py
-                    round(by)
+        elif mrise > 0 and mrun < 0:
+            bx = (mrun / mrise) * (15 - py) + px
+            round(bx)
+            if bx >= -15 and bx <= 15:
+                by = 15
+            else:
+                bx = -15
+                by = (mrise / mrun) * (bx - px) + py
+                round(by)
+        elif mrise < 0 and mrun > 0:
+            bx = (mrun / mrise) * (-15 - py) + px
+            round(bx)
+            if bx >= -15 and bx <= 15:
+                by = -15
+            else:
+                bx = 15
+                by = (mrise / mrun) * (bx - px) + py
+                round(by)
     elif mrise == 0 and mrun != 0:
-         if mrun > 0:
-             bx = 15
-             by = py
-         else:
-             bx = -15
-             by = py
+        if mrun > 0:
+            bx = 15
+            by = py
+        else:
+            bx = -15
+            by = py
     elif mrise != 0 and mrun == 0:
-         if mrise > 0:
-             bx = px
-             by = 15
-         else:
-             bx = px
-             by = -15
-    elif mrise == 0 and mrun == 0:
-         if  ey > py:
-             bx = px
-             by = 15
-         else:
-             bx = px
-             by = -15
-    bdryx = 600 + (bx)* 20
-    bdryy = 300 + -20*(by)
+        if mrise > 0:
+            bx = px
+            by = 15
+        else:
+            bx = px
+            by = -15
+    bdryx = 600 + (bx) * 20
+    bdryy = 300 + -20 * (by)
     pygame.draw.line(screen, green, (playerx + 20, playery + 20),
                      (bdryx, bdryy), 3)
     pygame.display.flip()
