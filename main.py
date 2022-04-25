@@ -289,7 +289,8 @@ def main_menu():
     hoverFour = False
     score = 0
     scores = [0, 0, 0, 0, 0]
-    while True:
+    running = True
+    while running:
         screen.fill((0, 0, 0))
         screen.blit(bridgeMenu, (0, 0))
         screen.blit(gameTitle, (100, 150))
@@ -312,7 +313,7 @@ def main_menu():
         if button_2.collidepoint((mx, my)):
             if click:
                 tutorial_sound.play()
-                menu_sound.stop()
+                #menu_sound.stop()
                 tutorial()
         if button_3.collidepoint((mx, my)):
             if click:
@@ -320,6 +321,7 @@ def main_menu():
                 settings(scores)
         if button_4.collidepoint((mx, my)):
             if click:
+                #tutorial_sound.play()
                 quit_menu()
 
         if hoverOne == False:
@@ -351,8 +353,9 @@ def main_menu():
         for event in pygame.event.get():
             # Check to see if close window is pressed
             if event.type == pygame.QUIT:
+                running = False
                 pygame.quit()
-                sys.quit()
+                sys.exit()
             # Check to see if ESC key is pressed
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -451,7 +454,7 @@ def campaign():
         zerorun = enemyx_adj - playerx_adj
         if launch == True and gameOver == False:
             if mrun != 0:
-                draw_laser(playerx, playery, mrise, mrun)
+                draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
                 if (enemyy_adj - playery_adj) == (enemyx_adj - playerx_adj) * (mrise / mrun):
                     hit = True
                 else:
@@ -462,7 +465,7 @@ def campaign():
                 else:
                     hit = False
         if launch == True and hit == True:
-            draw_laser(playerx, playery, mrise, mrun)
+            draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
             exploding_function(explosion_type)
             explosion_type = not explosion_type
             game_over_1up = ''
@@ -477,7 +480,7 @@ def campaign():
                 level = level + 1
             if score == 120:
                 level = level + 1
-                level5song_sound.play(3)
+                level5song_sound.play(-1)
             if score - initialScore == 60:
                 initialScore = score
                 lives = lives + 1
@@ -487,7 +490,7 @@ def campaign():
             mrun = 0
             mrise = 0
         elif launch == True and hit == False:
-            draw_laser(playerx, playery, mrise, mrun)
+            draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy)
             launch = False
             lives = lives - 1
             draw_enemylazer()
@@ -505,6 +508,7 @@ def campaign():
                 hit_miss_color = red
                 hit_miss = 'MISS!'
 
+        click = False
         # Check to see if close window is pressed
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -512,33 +516,6 @@ def campaign():
                 pygame.quit()
                 sys.exit()
             # Arrow keys to change rise and run values, and Enter key to launch
-                if event.type == pygame.KEYDOWN and gameOver == False:
-                    if event.key == pygame.K_LEFT:
-                        btn1_sound.play()
-                        if mrun > -20:
-                            mrun = mrun - 1
-                    elif event.key == pygame.K_RIGHT:
-                        btn2_sound.play()
-                        if mrun < 20:
-                            mrun = mrun + 1
-                    elif event.key == pygame.K_UP:
-                        btn3_sound.play()
-                        if mrise < 20:
-                            mrise = mrise + 1
-                    elif event.key == pygame.K_DOWN:
-                        btn4_sound.play()
-                        if mrise > -20:
-                            mrise = mrise - 1
-                    elif event.key == pygame.K_RETURN:
-                        laser_sound.play()
-                        launch = True
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        running = False
-                        bridge_sound.stop()
-                        menu_sound.play(-1)
-                        return score
-
             if event.type == pygame.KEYDOWN and gameOver == False:
                 if event.key == pygame.K_LEFT:
                     btn1_sound.play()
@@ -561,9 +538,14 @@ def campaign():
                     launch = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    running = False
-                    bridge_sound.stop()
-                    menu_sound.play(-1)
+                    return_menu(click)
+                    if return_menu(click) == True:
+                        running = False
+                        if level == 5:
+                            level5song_sound.stop()
+                        bridge_sound.stop()
+                        menu_sound.play(-1)
+                        return score
 
 def tutorial():
     running = True
@@ -584,7 +566,7 @@ def tutorial():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                    menu_sound.play(-1)
+                    #menu_sound.play(-1)
 
         pygame.display.update()
 
@@ -604,7 +586,7 @@ def settings(scores):
         draw_text(screen, '4th', 60, 250, 380, blue)
         draw_text(screen, str(scores[3]), 60, 650, 380, white)
         draw_text(screen, '5th', 60, 250, 440, blue)
-        draw_text(screen, str(scores[3]), 60, 650, 440, white)
+        draw_text(screen, str(scores[4]), 60, 650, 440, white)
 
         for event in pygame.event.get():
             # Check to see if close window is pressed
@@ -661,8 +643,9 @@ def quit_menu():
         for event in pygame.event.get():
             # Check to see if close window is pressed
             if event.type == pygame.QUIT:
+                running = False
                 pygame.quit()
-                sys.quit()
+                sys.exit()
             # Check to see if ESC key is pressed
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -686,11 +669,78 @@ def quit_menu():
 
         pygame.display.update()
 
+def return_menu(click):
+    running = True
+    hoverSeven = False
+    hoverEight = False
+    while running:
+        screen.fill((0, 0, 0))
+        screen.blit(viewPort, (0, 0))
+        draw_text(screen, 'Are you sure you want to', 60, 450, 120, orange)
+        draw_text(screen, 'return to the main menu?', 60, 450, 180, orange)
+
+        mx, my = pygame.mouse.get_pos()
+
+        button_7 = pygame.Rect(100, 300, 300, 50)
+        button_8 = pygame.Rect(500, 300, 300, 50)
+
+        if button_7.collidepoint((mx, my)):
+            if click:
+                return True
+        if button_8.collidepoint((mx, my)):
+            if click:
+                running = False
+
+        if hoverSeven == False:
+            screen.blit(mainButton, button_7)
+            draw_text(screen, 'YES', 64, 250, 305, white)
+        else:
+            screen.blit(hoverButton, button_7)
+            draw_text(screen, 'YES', 64, 250, 305, red)
+        if hoverEight == False:
+            screen.blit(mainButton, button_8)
+            draw_text(screen, 'NO', 64, 650, 305, white)
+        else:
+            screen.blit(hoverButton, button_8)
+            draw_text(screen, 'NO', 64, 650, 305, red)
+
+        click = False
+        for event in pygame.event.get():
+            # Check to see if close window is pressed
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+            # Check to see if ESC key is pressed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    btn1_sound.play()
+                    click = True
+            if event.type == pygame.MOUSEMOTION:
+                if button_7.collidepoint((mx, my)):
+                    if hoverSeven == False:
+                        btn3_sound.play()
+                        hoverSeven = True
+                elif button_8.collidepoint((mx, my)):
+                    if hoverEight == False:
+                        btn3_sound.play()
+                        hoverEight = True
+                else:
+                    hoverSeven = False
+                    hoverEight = False
+
+        pygame.display.update()
+
 #lazer boundary testing and firing
-def draw_laser(playerx, playery, mrise, mrun):
+def draw_laser(playerx, playery, mrise, mrun, enemyx, enemyy):
     # convert pixel locations to cartesian
     px = playerx / 20 - 29
     py = -1 * (playery / 20 - 14)
+    ex = enemyx / 20 - 29
+    ey = -1 * (enemyy / 20 - 14)
     # determine coordinates of laser intersection with boundary of coordinate plane
     if mrise != 0 and mrun != 0:
         if mrise > 0 and mrun > 0:
@@ -738,6 +788,13 @@ def draw_laser(playerx, playery, mrise, mrun):
             by = py
     elif mrise != 0 and mrun == 0:
         if mrise > 0:
+            bx = px
+            by = 15
+        else:
+            bx = px
+            by = -15
+    elif mrise == 0 and mrun == 0:
+        if ey > py:
             bx = px
             by = 15
         else:
