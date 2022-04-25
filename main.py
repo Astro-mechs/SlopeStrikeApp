@@ -100,6 +100,12 @@ click = False
 def main_menu():
     proceed_sound.play()
     menu_sound.play(-1)
+    hoverOne = False
+    hoverTwo = False
+    hoverThree = False
+    hoverFour = False
+    score = 0
+    scores = [0, 0, 0, 0, 0]
     while True:
         screen.fill((0, 0, 0))
         screen.blit(bridgeMenu, (0, 0))
@@ -117,7 +123,9 @@ def main_menu():
             if click:
                 campaign_sound.play()
                 menu_sound.stop()
-                campaign()
+                score = campaign()
+                scores.append(score)
+                scores.sort(reverse=True)
         if button_2.collidepoint((mx, my)):
             if click:
                 tutorial_sound.play()
@@ -125,21 +133,36 @@ def main_menu():
                 tutorial()
         if button_3.collidepoint((mx, my)):
             if click:
-                #tutorial_sound.play()
-                #menu_sound.stop()
-                settings()
+                tutorial_sound.play()
+                settings(scores)
         if button_4.collidepoint((mx, my)):
             if click:
                 quit_menu()
 
-        screen.blit(mainButton, button_1)
-        draw_text(screen, 'CAMPAIGN', 64, 450, 305, white)
-        screen.blit(mainButton, button_2)
-        draw_text(screen, 'TUTORIAL', 64, 450, 370, white)
-        screen.blit(mainButton, button_3)
-        draw_text(screen, 'SETTINGS', 64, 450, 435, white)
-        screen.blit(mainButton, button_4)
-        draw_text(screen, 'QUIT', 64, 450, 500, white)
+        if hoverOne == False:
+            screen.blit(mainButton, button_1)
+            draw_text(screen, 'START', 64, 450, 305, white)
+        else:
+            screen.blit(hoverButton, button_1)
+            draw_text(screen, 'START', 64, 450, 305, red)
+        if hoverTwo == False:
+            screen.blit(mainButton, button_2)
+            draw_text(screen, 'CONTROLS', 64, 450, 370, white)
+        else:
+            screen.blit(hoverButton, button_2)
+            draw_text(screen, 'CONTROLS', 64, 450, 370, red)
+        if hoverThree == False:
+            screen.blit(mainButton, button_3)
+            draw_text(screen, 'SCORES', 64, 450, 435, white)
+        else:
+            screen.blit(hoverButton, button_3)
+            draw_text(screen, 'SCORES', 64, 450, 435, red)
+        if hoverFour == False:
+            screen.blit(mainButton, button_4)
+            draw_text(screen, 'QUIT', 64, 450, 500, white)
+        else:
+            screen.blit(hoverButton, button_4)
+            draw_text(screen, 'QUIT', 64, 450, 500, red)
 
         click = False
         for event in pygame.event.get():
@@ -157,21 +180,26 @@ def main_menu():
                     click = True
             if event.type == pygame.MOUSEMOTION:
                 if button_1.collidepoint((mx, my)):
-                    btn3_sound.play()
-                    screen.blit(hoverButton, button_1)
-                    draw_text(screen, 'CAMPAIGN', 64, 450, 305, blue)
-                if button_2.collidepoint((mx, my)):
-                    btn3_sound.play()
-                    screen.blit(hoverButton, button_2)
-                    draw_text(screen, 'TUTORIAL', 64, 450, 370, blue)
-                if button_3.collidepoint((mx, my)):
-                    btn3_sound.play()
-                    screen.blit(hoverButton, button_3)
-                    draw_text(screen, 'SETTINGS', 64, 450, 435, blue)
-                if button_4.collidepoint((mx, my)):
-                    btn3_sound.play()
-                    screen.blit(hoverButton, button_4)
-                    draw_text(screen, 'QUIT', 64, 450, 500, blue)
+                    if hoverOne == False:
+                        btn3_sound.play()
+                        hoverOne = True
+                elif button_2.collidepoint((mx, my)):
+                    if hoverTwo == False:
+                        btn3_sound.play()
+                        hoverTwo = True
+                elif button_3.collidepoint((mx, my)):
+                    if hoverThree == False:
+                        btn3_sound.play()
+                        hoverThree = True
+                elif button_4.collidepoint((mx, my)):
+                    if hoverFour == False:
+                        btn3_sound.play()
+                        hoverFour = True
+                else:
+                    hoverOne = False
+                    hoverTwo = False
+                    hoverThree = False
+                    hoverFour = False
 
         pygame.display.update()
 
@@ -374,6 +402,7 @@ def campaign():
                         running = False
                         bridge_sound.stop()
                         menu_sound.play(-1)
+                        return score
 
 def tutorial():
     running = True
@@ -398,12 +427,23 @@ def tutorial():
 
         pygame.display.update()
 
-def settings():
+def settings(scores):
     running = True
     while running:
         screen.fill((0, 0, 0))
-        screen.blit(viewPort, (0, 0))
-        draw_text(screen, 'SETTINGS', 120, 450, 150, orange)
+        screen.blit(corridorMenu, (0, 0))
+        draw_text(screen, 'Rank', 80, 250, 140, orange)
+        draw_text(screen, 'Score', 80, 650, 140, orange)
+        draw_text(screen, '1st', 60, 250, 200, blue)
+        draw_text(screen, str(scores[0]), 60, 650, 200, white)
+        draw_text(screen, '2nd', 60, 250, 260, blue)
+        draw_text(screen, str(scores[1]), 60, 650, 260, white)
+        draw_text(screen, '3rd', 60, 250, 320, blue)
+        draw_text(screen, str(scores[2]), 60, 650, 320, white)
+        draw_text(screen, '4th', 60, 250, 380, blue)
+        draw_text(screen, str(scores[3]), 60, 650, 380, white)
+        draw_text(screen, '5th', 60, 250, 440, blue)
+        draw_text(screen, str(scores[3]), 60, 650, 440, white)
 
         for event in pygame.event.get():
             # Check to see if close window is pressed
@@ -421,9 +461,11 @@ def settings():
 
 def quit_menu():
     running = True
+    hoverFive = False
+    hoverSix = False
     while running:
         screen.fill((0, 0, 0))
-        screen.blit(corridorMenu, (0, 0))
+        screen.blit(viewPort, (0, 0))
         draw_text(screen, 'Are you sure you want to quit?', 60, 450, 150, orange)
 
         mx, my = pygame.mouse.get_pos()
@@ -441,10 +483,18 @@ def quit_menu():
             if click:
                 running = False
 
-        screen.blit(mainButton, button_5)
-        draw_text(screen, 'YES', 64, 250, 305, white)
-        screen.blit(mainButton, button_6)
-        draw_text(screen, 'NO', 64, 650, 305, white)
+        if hoverFive == False:
+            screen.blit(mainButton, button_5)
+            draw_text(screen, 'YES', 64, 250, 305, white)
+        else:
+            screen.blit(hoverButton, button_5)
+            draw_text(screen, 'YES', 64, 250, 305, red)
+        if hoverSix == False:
+            screen.blit(mainButton, button_6)
+            draw_text(screen, 'NO', 64, 650, 305, white)
+        else:
+            screen.blit(hoverButton, button_6)
+            draw_text(screen, 'NO', 64, 650, 305, red)
 
         click = False
         for event in pygame.event.get():
@@ -462,13 +512,16 @@ def quit_menu():
                     click = True
             if event.type == pygame.MOUSEMOTION:
                 if button_5.collidepoint((mx, my)):
-                    btn3_sound.play()
-                    screen.blit(hoverButton, button_5)
-                    draw_text(screen, 'YES', 64, 250, 305, blue)
-                if button_6.collidepoint((mx, my)):
-                    btn3_sound.play()
-                    screen.blit(hoverButton, button_6)
-                    draw_text(screen, 'NO', 64, 650, 305, blue)
+                    if hoverFive == False:
+                        btn3_sound.play()
+                        hoverFive = True
+                elif button_6.collidepoint((mx, my)):
+                    if hoverSix == False:
+                        btn3_sound.play()
+                        hoverSix = True
+                else:
+                    hoverFive = False
+                    hoverSix = False
 
         pygame.display.update()
 
