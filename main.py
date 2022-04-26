@@ -5,7 +5,7 @@ import sys
 pygame.init()
 
 # create the screen
-screen = pygame.display.set_mode([900,600])
+screen = pygame.display.set_mode((900,600))
 
 # Title and Icon of window
 pygame.display.set_caption("Slope Strike")
@@ -14,6 +14,10 @@ pygame.display.set_icon(icon)
 
 # background image coordinate plane
 gridCP = pygame.image.load('Grid3CP.png')
+gridCP2 = pygame.image.load('Grid3CP_level2.png')
+gridCP3 = pygame.image.load('Grid3CP_level3.png')
+gridCP4 = pygame.image.load('Grid3CP_level4.png')
+gridCP5 = pygame.image.load('Grid3CP_level5.png')
 UIwindow = pygame.image.load("Card X2.png")
 UIwindow = pygame.transform.scale(UIwindow, (300, 600))
 
@@ -27,6 +31,19 @@ viewPort = pygame.image.load('viewport.png')
 bridgeMenu = pygame.image.load('bridge.png')
 corridorMenu = pygame.image.load('corridor.png')
 gameTitle = pygame.image.load('title.png')
+
+upArrow = pygame.image.load("uparrow.png")
+upArrow = pygame.transform.scale(upArrow, (50, 50))
+downArrow = pygame.image.load("downarrow.png")
+downArrow = pygame.transform.scale(downArrow, (50, 50))
+rightArrow = pygame.image.load("rightarrow.png")
+rightArrow = pygame.transform.scale(rightArrow, (50, 50))
+leftArrow = pygame.image.load("leftarrow.png")
+leftArrow = pygame.transform.scale(leftArrow, (50, 50))
+enterKey = pygame.image.load("blankkey.png")
+enterKey = pygame.transform.scale(enterKey, (50, 50))
+escKey = pygame.image.load("blankkey.png")
+escKey = pygame.transform.scale(escKey, (50, 50))
 
 #Colors
 # define the RGB value for colors
@@ -288,8 +305,9 @@ def main_menu():
     hoverThree = False
     hoverFour = False
     score = 0
-    scores = [0, 0, 0, 0, 0]
+    scores = [0, 0, 0, 0, 0, 0]
     running = True
+    click = False
     while running:
         screen.fill((0, 0, 0))
         screen.blit(bridgeMenu, (0, 0))
@@ -413,7 +431,18 @@ def campaign():
     while running:
         # RGB for background color and background image
         screen.fill((0, 0, 0))
-        screen.blit(gridCP, (0, 0))
+
+        if level == 1:
+            screen.blit(gridCP, (0, 0))
+        elif level == 2:
+            screen.blit(gridCP2, (0, 0))
+        elif level == 3:
+            screen.blit(gridCP3, (0, 0))
+        elif level == 4:
+            screen.blit(gridCP4, (0, 0))
+        elif level == 5:
+            screen.blit(gridCP5, (0, 0))
+
         screen.blit(UIwindow, (0, 0))
 
         # Update HUD, player, and enemy
@@ -551,10 +580,32 @@ def tutorial():
     running = True
     while running:
         screen.fill((0, 0, 0))
-        draw_text(screen, 'TUTORIAL', 120, 450, 150, orange)
+        screen.blit(corridorMenu, (0, 0))
 
-        button_5 = pygame.Rect(300, 300, 300, 50)
-        button_6 = pygame.Rect(300, 300, 300, 50)
+        screen.blit(upArrow, (425, 130))
+        screen.blit(downArrow, (425, 190))
+        screen.blit(rightArrow, (425, 250))
+        screen.blit(leftArrow, (425, 310))
+        screen.blit(enterKey, (425, 370))
+        screen.blit(escKey, (425, 430))
+        draw_text(screen, 'Enter', 20, 450, 390, (253, 219, 185))
+        draw_text(screen, 'Esc', 20, 450, 450, (253, 219, 185))
+
+        draw_text(screen, 'Key', 70, 250, 80, orange)
+        draw_text(screen, 'Key', 70, 250, 80, orange)
+        draw_text(screen, 'Function', 70, 650, 80, orange)
+        draw_text(screen, 'Up Arrow', 50, 250, 140, blue)
+        draw_text(screen, 'Increase RISE', 50, 650, 140, white)
+        draw_text(screen, 'Down Arrow', 50, 250, 200, blue)
+        draw_text(screen, 'Decrease RISE', 50, 650, 200, white)
+        draw_text(screen, 'Right Arrow', 50, 250, 260, blue)
+        draw_text(screen, 'Increase RUN', 50, 650, 260, white)
+        draw_text(screen, 'Left Arrow', 50, 250, 320, blue)
+        draw_text(screen, 'Decrease RUN', 50, 650, 320, white)
+        draw_text(screen, 'Enter/Return', 50, 250, 380, blue)
+        draw_text(screen, 'Fire laser', 50, 650, 380, white)
+        draw_text(screen, 'Escape', 50, 250, 440, blue)
+        draw_text(screen, 'Navigate back', 50, 650, 440, white)
 
         for event in pygame.event.get():
             # Check to see if close window is pressed
@@ -575,18 +626,20 @@ def settings(scores):
     while running:
         screen.fill((0, 0, 0))
         screen.blit(corridorMenu, (0, 0))
-        draw_text(screen, 'Rank', 80, 250, 140, orange)
-        draw_text(screen, 'Score', 80, 650, 140, orange)
-        draw_text(screen, '1st', 60, 250, 200, blue)
-        draw_text(screen, str(scores[0]), 60, 650, 200, white)
-        draw_text(screen, '2nd', 60, 250, 260, blue)
-        draw_text(screen, str(scores[1]), 60, 650, 260, white)
-        draw_text(screen, '3rd', 60, 250, 320, blue)
-        draw_text(screen, str(scores[2]), 60, 650, 320, white)
-        draw_text(screen, '4th', 60, 250, 380, blue)
-        draw_text(screen, str(scores[3]), 60, 650, 380, white)
-        draw_text(screen, '5th', 60, 250, 440, blue)
-        draw_text(screen, str(scores[4]), 60, 650, 440, white)
+        draw_text(screen, 'Rank', 80, 250, 80, orange)
+        draw_text(screen, 'Score', 80, 650, 80, orange)
+        draw_text(screen, '1st', 60, 250, 140, blue)
+        draw_text(screen, str(scores[0]), 60, 650, 140, white)
+        draw_text(screen, '2nd', 60, 250, 200, blue)
+        draw_text(screen, str(scores[1]), 60, 650, 200, white)
+        draw_text(screen, '3rd', 60, 250, 260, blue)
+        draw_text(screen, str(scores[2]), 60, 650, 260, white)
+        draw_text(screen, '4th', 60, 250, 320, blue)
+        draw_text(screen, str(scores[3]), 60, 650, 320, white)
+        draw_text(screen, '5th', 60, 250, 380, blue)
+        draw_text(screen, str(scores[4]), 60, 650, 380, white)
+        draw_text(screen, '6th', 60, 250, 440, blue)
+        draw_text(screen, str(scores[5]), 60, 650, 440, white)
 
         for event in pygame.event.get():
             # Check to see if close window is pressed
