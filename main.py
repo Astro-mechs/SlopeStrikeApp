@@ -305,7 +305,7 @@ def main_menu():
     hoverThree = False
     hoverFour = False
     score = 0
-    scores = [0, 0, 0, 0, 0, 0]
+    scores = [0]*6
     running = True
     click = False
     while running:
@@ -326,8 +326,12 @@ def main_menu():
                 campaign_sound.play()
                 menu_sound.stop()
                 score = campaign()
-                scores.append(score)
-                scores.sort(reverse=True)
+                scoresTemp = scores
+                scoresTemp.append(score)
+                scoresTemp.sort(reverse=True)
+                scores = [0]*6
+                for i in range(6):
+                    scores[i]=scoresTemp[i]
         if button_2.collidepoint((mx, my)):
             if click:
                 tutorial_sound.play()
