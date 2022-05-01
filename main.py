@@ -531,6 +531,7 @@ def campaign():
             print(f'Shield Level: {lives}')
             if lives == 0:
                 # running = False
+                level5song_sound.stop()
                 deflectorfail_sound.play()
                 gameOver = True
                 game_over_1up_color = red
