@@ -145,7 +145,8 @@ warning_sound = load_sound('100.wav')
 danger_sound = load_sound('015.wav')
 lifesupport_sound = load_sound('017.wav')
 deflectorfail_sound = load_sound('020.wav')
-level5song_sound = load_sound('S31-Going Deep.mp3')
+level5song_sound = load_sound('technogeek.mp3')
+level2song_sound = load_sound('nebula.mp3')
 
 
 #Function to define locations for Player and Enemy LEVEL 1
@@ -532,10 +533,12 @@ def campaign():
             score = 10 * multiplier + score
             if score == 30:
                 level = level + 1
+                level2song_sound.play(-1)
             if score == 60:
                 level = level + 1
             if score == 90:
                 level = level + 1
+                level2song_sound.fadeout(7000)
             if score == 120:
                 level = level + 1
                 level5song_sound.play(-1)
@@ -556,6 +559,7 @@ def campaign():
             print(f'Shield Level: {lives}')
             if lives == 0:
                 # running = False
+                level2song_sound.stop()
                 level5song_sound.stop()
                 deflectorfail_sound.play()
                 gameOver = True
