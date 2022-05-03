@@ -45,6 +45,30 @@ enterKey = pygame.transform.scale(enterKey, (50, 50))
 escKey = pygame.image.load("blankkey.png")
 escKey = pygame.transform.scale(escKey, (50, 50))
 
+upArrowPress = pygame.image.load("uparrowpress.png")
+upArrowPress = pygame.transform.scale(upArrowPress, (50, 50))
+downArrowPress = pygame.image.load("downarrowpress.png")
+downArrowPress = pygame.transform.scale(downArrowPress, (50, 50))
+rightArrowPress = pygame.image.load("rightarrowpress.png")
+rightArrowPress = pygame.transform.scale(rightArrowPress, (50, 50))
+leftArrowPress = pygame.image.load("leftarrowpress.png")
+leftArrowPress = pygame.transform.scale(leftArrowPress, (50, 50))
+enterKeyPress = pygame.image.load("blankkeypress.png")
+enterKeyPress = pygame.transform.scale(enterKeyPress, (50, 50))
+escKeyPress = pygame.image.load("blankkeypress.png")
+escKeyPress = pygame.transform.scale(escKeyPress, (50, 50))
+
+rankNone = pygame.image.load("ranknone.png")
+rankNone = pygame.transform.scale(rankNone, (33, 50))
+rankGreen = pygame.image.load("rankgreen.png")
+rankGreen = pygame.transform.scale(rankGreen, (33, 50))
+rankVeteran = pygame.image.load("rankveteran.png")
+rankVeteran = pygame.transform.scale(rankVeteran, (33, 50))
+rankElite = pygame.image.load("rankelite.png")
+rankElite = pygame.transform.scale(rankElite, (33, 50))
+rankLegendary = pygame.image.load("ranklegendary.png")
+rankLegendary = pygame.transform.scale(rankLegendary, (33, 50))
+
 #Colors
 # define the RGB value for colors
 white = (255, 255, 255)
@@ -312,6 +336,7 @@ def main_menu():
         screen.fill((0, 0, 0))
         screen.blit(bridgeMenu, (0, 0))
         screen.blit(gameTitle, (100, 150))
+        draw_text(screen, 'BETA VERSION', 16, 450, 280, orange)
         draw_text(screen, 'Created by JP Fletcher and Anthony Tran 2022', 24, 450, 570, orange)
 
         mx, my = pygame.mouse.get_pos()
@@ -596,7 +621,7 @@ def tutorial():
         draw_text(screen, 'Enter', 20, 450, 390, (253, 219, 185))
         draw_text(screen, 'Esc', 20, 450, 450, (253, 219, 185))
 
-        draw_text(screen, 'Key', 70, 250, 80, orange)
+        draw_text(screen, 'Push the corresponding keys to calibrate', 24, 450, 570, orange)
         draw_text(screen, 'Key', 70, 250, 80, orange)
         draw_text(screen, 'Function', 70, 650, 80, orange)
         draw_text(screen, 'Up Arrow', 50, 250, 140, blue)
@@ -621,30 +646,84 @@ def tutorial():
             # Check to see if ESC key is pressed
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    #pygame.time.wait(2000)
+                    screen.blit(escKeyPress, (425, 430))
+                    draw_text(screen, 'Esc', 20, 450, 450, (213, 255, 219))
                     running = False
                     #menu_sound.play(-1)
+                if event.key == pygame.K_LEFT:
+                    btn1_sound.play()
+                    screen.blit(leftArrowPress, (425, 310))
+                if event.key == pygame.K_RIGHT:
+                    btn2_sound.play()
+                    screen.blit(rightArrowPress, (425, 250))
+                if event.key == pygame.K_UP:
+                    btn3_sound.play()
+                    screen.blit(upArrowPress, (425, 130))
+                if event.key == pygame.K_DOWN:
+                    btn4_sound.play()
+                    screen.blit(downArrowPress, (425, 190))
+                if event.key == pygame.K_RETURN:
+                    laser_sound.play()
+                    screen.blit(enterKeyPress, (425, 370))
+                    draw_text(screen, 'Enter', 20, 450, 390, (213, 255, 219))
 
         pygame.display.update()
 
 def settings(scores):
+    ranks = [0]*6
+    icons = [0]*6
     running = True
     while running:
         screen.fill((0, 0, 0))
         screen.blit(corridorMenu, (0, 0))
-        draw_text(screen, 'Rank', 80, 250, 80, orange)
-        draw_text(screen, 'Score', 80, 650, 80, orange)
-        draw_text(screen, '1st', 60, 250, 140, blue)
-        draw_text(screen, str(scores[0]), 60, 650, 140, white)
-        draw_text(screen, '2nd', 60, 250, 200, blue)
-        draw_text(screen, str(scores[1]), 60, 650, 200, white)
-        draw_text(screen, '3rd', 60, 250, 260, blue)
-        draw_text(screen, str(scores[2]), 60, 650, 260, white)
-        draw_text(screen, '4th', 60, 250, 320, blue)
-        draw_text(screen, str(scores[3]), 60, 650, 320, white)
-        draw_text(screen, '5th', 60, 250, 380, blue)
-        draw_text(screen, str(scores[4]), 60, 650, 380, white)
-        draw_text(screen, '6th', 60, 250, 440, blue)
-        draw_text(screen, str(scores[5]), 60, 650, 440, white)
+
+        for i in range(6):
+            if scores[i] == 0:
+                ranks[i] = '----------'
+                icons[i] = rankNone
+            elif scores[i] >= 10 and scores[i] <= 110:
+                ranks[i] = 'Green'
+                icons[i] = rankGreen
+            elif scores[i] >= 120 and scores[i] <= 220:
+                ranks[i] = 'Veteran'
+                icons[i] = rankVeteran
+            elif scores[i] >= 230 and scores[i] <= 530:
+                ranks[i] = 'Elite'
+                icons[i] = rankElite
+            elif scores[i] >= 540:
+                ranks[i] = 'Legendary'
+                icons[i] = rankLegendary
+
+        draw_text(screen, 'GREEN: 10 to 110 | VETERAN: 120 to 220 | ELITE: 230 to 530 | LEGENDARY: 540+', 24, 450, 570, orange)
+        draw_text(screen, 'Position', 70, 260, 80, orange)
+        draw_text(screen, 'Rank', 70, 500, 80, orange)
+        draw_text(screen, 'Score', 70, 720, 80, orange)
+        draw_text(screen, '1st', 50, 260, 140, white)
+        draw_text(screen, ranks[0], 50, 500, 140, blue)
+        draw_text(screen, str(scores[0]), 50, 720, 140, white)
+        draw_text(screen, '2nd', 50, 260, 200, white)
+        draw_text(screen, ranks[1], 50, 500, 200, blue)
+        draw_text(screen, str(scores[1]), 50, 720, 200, white)
+        draw_text(screen, '3rd', 50, 260, 260, white)
+        draw_text(screen, ranks[2], 50, 500, 260, blue)
+        draw_text(screen, str(scores[2]), 50, 720, 260, white)
+        draw_text(screen, '4th', 50, 260, 320, white)
+        draw_text(screen, ranks[3], 50, 500, 320, blue)
+        draw_text(screen, str(scores[3]), 50, 720, 320, white)
+        draw_text(screen, '5th', 50, 260, 380, white)
+        draw_text(screen, ranks[4], 50, 500, 380, blue)
+        draw_text(screen, str(scores[4]), 50, 720, 380, white)
+        draw_text(screen, '6th', 50, 260, 440, white)
+        draw_text(screen, ranks[5], 50, 500, 440, blue)
+        draw_text(screen, str(scores[5]), 50, 720, 440, white)
+
+        screen.blit(icons[0], (80, 130))
+        screen.blit(icons[1], (80, 190))
+        screen.blit(icons[2], (80, 250))
+        screen.blit(icons[3], (80, 310))
+        screen.blit(icons[4], (80, 370))
+        screen.blit(icons[5], (80, 430))
 
         for event in pygame.event.get():
             # Check to see if close window is pressed
