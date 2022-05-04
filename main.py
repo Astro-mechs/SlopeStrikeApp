@@ -539,9 +539,10 @@ def campaign():
                 level = level + 1
             if score == 90:
                 level = level + 1
-                level2song_sound.fadeout(7000)
+                #level2song_sound.fadeout(7000)
             if score == 120:
                 level = level + 1
+                level2song_sound.stop()
                 level5song_sound.play(-1)
             if score - initialScore == 60:
                 initialScore = score
@@ -560,8 +561,10 @@ def campaign():
             print(f'Shield Level: {lives}')
             if lives == 0:
                 # running = False
-                level2song_sound.stop()
-                level5song_sound.stop()
+                if level >= 2 and level <= 4:
+                    level2song_sound.stop()
+                if level == 5:
+                    level5song_sound.stop()
                 deflectorfail_sound.play()
                 gameOver = True
                 game_over_1up_color = red
@@ -605,6 +608,8 @@ def campaign():
                     return_menu(click)
                     if return_menu(click) == True:
                         running = False
+                        if level >= 2 and level <= 4:
+                            level2song_sound.stop()
                         if level == 5:
                             level5song_sound.stop()
                         bridge_sound.stop()
