@@ -1,6 +1,7 @@
 import pygame
 import random
 import sys
+import os
 
 pygame.init()
 
@@ -9,64 +10,64 @@ screen = pygame.display.set_mode((900,600))
 
 # Title and Icon of window
 pygame.display.set_caption("Slope Strike")
-icon = pygame.image.load('laser-surgery.png')
+icon = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','laser-surgery.png'))
 pygame.display.set_icon(icon)
 
 # background image coordinate plane
-gridCP = pygame.image.load('Grid3CP.png')
-gridCP2 = pygame.image.load('Grid3CP_level2.png')
-gridCP3 = pygame.image.load('Grid3CP_level3.png')
-gridCP4 = pygame.image.load('Grid3CP_level4.png')
-gridCP5 = pygame.image.load('Grid3CP_level5.png')
-UIwindow = pygame.image.load("Card X2.png")
+gridCP = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','Grid3CP.png'))
+gridCP2 = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','Grid3CP_level2.png'))
+gridCP3 = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','Grid3CP_level3.png'))
+gridCP4 = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','Grid3CP_level4.png'))
+gridCP5 = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','Grid3CP_level5.png'))
+UIwindow = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"Card X2.png"))
 UIwindow = pygame.transform.scale(UIwindow, (300, 600))
 
-amLogo = pygame.image.load("astromechlogo.png")
+amLogo = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"astromechlogo.png"))
 amLogo = pygame.transform.scale(amLogo, (400, 125))
 
-mainButton = pygame.image.load('button.png')
-hoverButton = pygame.image.load('button_hover.png')
+mainButton = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','button.png'))
+hoverButton = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','button_hover.png'))
 
-viewPort = pygame.image.load('viewport.png')
-bridgeMenu = pygame.image.load('bridge.png')
-corridorMenu = pygame.image.load('corridor.png')
-gameTitle = pygame.image.load('title.png')
+viewPort = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','viewport.png'))
+bridgeMenu = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','bridge.png'))
+corridorMenu = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','corridor.png'))
+gameTitle = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','title.png'))
 
-upArrow = pygame.image.load("uparrow.png")
+upArrow = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"uparrow.png"))
 upArrow = pygame.transform.scale(upArrow, (50, 50))
-downArrow = pygame.image.load("downarrow.png")
+downArrow = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"downarrow.png"))
 downArrow = pygame.transform.scale(downArrow, (50, 50))
-rightArrow = pygame.image.load("rightarrow.png")
+rightArrow = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"rightarrow.png"))
 rightArrow = pygame.transform.scale(rightArrow, (50, 50))
-leftArrow = pygame.image.load("leftarrow.png")
+leftArrow = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"leftarrow.png"))
 leftArrow = pygame.transform.scale(leftArrow, (50, 50))
-enterKey = pygame.image.load("blankkey.png")
+enterKey = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"blankkey.png"))
 enterKey = pygame.transform.scale(enterKey, (50, 50))
-escKey = pygame.image.load("blankkey.png")
+escKey = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"blankkey.png"))
 escKey = pygame.transform.scale(escKey, (50, 50))
 
-upArrowPress = pygame.image.load("uparrowpress.png")
+upArrowPress = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"uparrowpress.png"))
 upArrowPress = pygame.transform.scale(upArrowPress, (50, 50))
-downArrowPress = pygame.image.load("downarrowpress.png")
+downArrowPress = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"downarrowpress.png"))
 downArrowPress = pygame.transform.scale(downArrowPress, (50, 50))
-rightArrowPress = pygame.image.load("rightarrowpress.png")
+rightArrowPress = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"rightarrowpress.png"))
 rightArrowPress = pygame.transform.scale(rightArrowPress, (50, 50))
-leftArrowPress = pygame.image.load("leftarrowpress.png")
+leftArrowPress = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"leftarrowpress.png"))
 leftArrowPress = pygame.transform.scale(leftArrowPress, (50, 50))
-enterKeyPress = pygame.image.load("blankkeypress.png")
+enterKeyPress = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"blankkeypress.png"))
 enterKeyPress = pygame.transform.scale(enterKeyPress, (50, 50))
-escKeyPress = pygame.image.load("blankkeypress.png")
+escKeyPress = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"blankkeypress.png"))
 escKeyPress = pygame.transform.scale(escKeyPress, (50, 50))
 
-rankNone = pygame.image.load("ranknone.png")
+rankNone = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"ranknone.png"))
 rankNone = pygame.transform.scale(rankNone, (33, 50))
-rankGreen = pygame.image.load("rankgreen.png")
+rankGreen = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"rankgreen.png"))
 rankGreen = pygame.transform.scale(rankGreen, (33, 50))
-rankVeteran = pygame.image.load("rankveteran.png")
+rankVeteran = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"rankveteran.png"))
 rankVeteran = pygame.transform.scale(rankVeteran, (33, 50))
-rankElite = pygame.image.load("rankelite.png")
+rankElite = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"rankelite.png"))
 rankElite = pygame.transform.scale(rankElite, (33, 50))
-rankLegendary = pygame.image.load("ranklegendary.png")
+rankLegendary = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets',"ranklegendary.png"))
 rankLegendary = pygame.transform.scale(rankLegendary, (33, 50))
 
 #Colors
@@ -103,15 +104,15 @@ def draw_text(surface, text, size, x, y, color):
     surface.blit(text_surface, text_rect)
 
 # Load Player and Enemy Images
-playerImg = pygame.image.load('ufo.png')
-enemyImg = pygame.image.load('alien3.png')
+playerImg = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','ufo.png'))
+enemyImg = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','alien3.png'))
 def player(playerImg, playerx, playery):
     screen.blit(playerImg, (playerx, playery))
 def enemy(enemyImg, enemyx, enemyy):
     screen.blit(enemyImg, (enemyx, enemyy))
 
 # load level indicator images
-#level_img = pygame.image.load('level 2.png')
+#level_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','level 2.png'))
 #levely_change = 10
 #level_show = "ready"
 
@@ -125,27 +126,27 @@ def enemy(enemyImg, enemyx, enemyy):
 def load_sound(file):
     sound = pygame.mixer.Sound(file)
     return sound
-laser_sound = load_sound('laser1.mp3')
-enemylaser_sound = load_sound('laser1a.mp3')
-explosion_sound1 = load_sound('explosion1.wav')
-explosion_sound2 = load_sound('explosion2.wav')
-btn1_sound = load_sound('brdgbtn1.wav')
-btn2_sound = load_sound('brdgbtn5.wav')
-btn3_sound = load_sound('brdgbtn3.wav')
-btn4_sound = load_sound('brdgbtn6.wav')
-bridge_sound = load_sound('bridge.wav')
-proceed_sound = load_sound('061.wav')
-menu_sound = load_sound('eprd-bridge.wav')
-campaign_sound = load_sound('211.wav')
-tutorial_sound = load_sound('226.wav')
-quit_sound = load_sound('014.wav')
-logo_sound = load_sound('R2D2.mp3')
-shieldup_sound = load_sound('027.wav')
-warning_sound = load_sound('100.wav')
-danger_sound = load_sound('015.wav')
-lifesupport_sound = load_sound('017.wav')
-deflectorfail_sound = load_sound('020.wav')
-level5song_sound = load_sound('S31-Going Deep.mp3')
+laser_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','laser1.mp3'))
+enemylaser_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','laser1a.mp3'))
+explosion_sound1 = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','explosion1.wav'))
+explosion_sound2 = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','explosion2.wav'))
+btn1_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','brdgbtn1.wav'))
+btn2_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','brdgbtn5.wav'))
+btn3_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','brdgbtn3.wav'))
+btn4_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','brdgbtn6.wav'))
+bridge_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','bridge.wav'))
+proceed_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','061.wav'))
+menu_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','eprd-bridge.wav'))
+campaign_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','211.wav'))
+tutorial_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','226.wav'))
+quit_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','014.wav'))
+logo_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','R2D2.mp3'))
+shieldup_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','027.wav'))
+warning_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','100.wav'))
+danger_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','015.wav'))
+lifesupport_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','017.wav'))
+deflectorfail_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','020.wav'))
+level5song_sound = load_sound(os.path.join(os.path.dirname(__file__), 'Assets','S31-Going Deep.mp3'))
 
 
 #Function to define locations for Player and Enemy LEVEL 1
@@ -267,38 +268,38 @@ def generate_playerandenemy5():
 
 #Function for explosion animation
 def exploding_function(explosion_type):
-    explosion_sprite10 = [pygame.image.load('expl_10_000.png'), pygame.image.load('expl_10_001.png'),
-                          pygame.image.load('expl_10_002.png'), pygame.image.load('expl_10_003.png'),
-                          pygame.image.load('expl_10_004.png'), pygame.image.load('expl_10_005.png'),
-                          pygame.image.load('expl_10_006.png'), pygame.image.load('expl_10_007.png'),
-                          pygame.image.load('expl_10_008.png'), pygame.image.load('expl_10_009.png'),
-                          pygame.image.load('expl_10_0010.png'), pygame.image.load('expl_10_0011.png'),
-                          pygame.image.load('expl_10_0012.png'), pygame.image.load('expl_10_0013.png'),
-                          pygame.image.load('expl_10_0014.png'), pygame.image.load('expl_10_0015.png'),
-                          pygame.image.load('expl_10_0016.png'), pygame.image.load('expl_10_0017.png'),
-                          pygame.image.load('expl_10_0018.png'), pygame.image.load('expl_10_0019.png'),
-                          pygame.image.load('expl_10_0020.png'), pygame.image.load('expl_10_0021.png'),
-                          pygame.image.load('expl_10_0022.png'), pygame.image.load('expl_10_0023.png'),
-                          pygame.image.load('expl_10_0024.png'), pygame.image.load('expl_10_0025.png'),
-                          pygame.image.load('expl_10_0026.png'), pygame.image.load('expl_10_0027.png'),
-                          pygame.image.load('expl_10_0028.png'), pygame.image.load('expl_10_0029.png'),
-                          pygame.image.load('expl_10_0030.png'), pygame.image.load('expl_10_0031.png')]
-    explosion_sprite06 = [pygame.image.load('expl_06_000.png'), pygame.image.load('expl_06_001.png'),
-                          pygame.image.load('expl_06_002.png'), pygame.image.load('expl_06_003.png'),
-                          pygame.image.load('expl_06_004.png'), pygame.image.load('expl_06_005.png'),
-                          pygame.image.load('expl_06_006.png'), pygame.image.load('expl_06_007.png'),
-                          pygame.image.load('expl_06_008.png'), pygame.image.load('expl_06_009.png'),
-                          pygame.image.load('expl_06_0010.png'), pygame.image.load('expl_06_0011.png'),
-                          pygame.image.load('expl_06_0012.png'), pygame.image.load('expl_06_0013.png'),
-                          pygame.image.load('expl_06_0014.png'), pygame.image.load('expl_06_0015.png'),
-                          pygame.image.load('expl_06_0016.png'), pygame.image.load('expl_06_0017.png'),
-                          pygame.image.load('expl_06_0018.png'), pygame.image.load('expl_06_0019.png'),
-                          pygame.image.load('expl_06_0020.png'), pygame.image.load('expl_06_0021.png'),
-                          pygame.image.load('expl_06_0022.png'), pygame.image.load('expl_06_0023.png'),
-                          pygame.image.load('expl_06_0024.png'), pygame.image.load('expl_06_0025.png'),
-                          pygame.image.load('expl_06_0026.png'), pygame.image.load('expl_06_0027.png'),
-                          pygame.image.load('expl_06_0028.png'), pygame.image.load('expl_06_0029.png'),
-                          pygame.image.load('expl_06_0030.png'), pygame.image.load('expl_06_0031.png')]
+    explosion_sprite10 = [pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_000.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_001.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_002.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_003.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_004.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_005.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_006.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_007.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_008.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_009.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0010.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0011.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0012.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0013.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0014.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0015.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0016.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0017.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0018.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0019.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0020.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0021.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0022.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0023.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0024.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0025.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0026.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0027.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0028.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0029.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0030.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_10_0031.png'))]
+    explosion_sprite06 = [pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_000.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_001.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_002.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_003.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_004.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_005.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_006.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_007.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_008.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_009.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0010.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0011.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0012.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0013.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0014.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0015.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0016.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0017.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0018.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0019.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0020.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0021.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0022.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0023.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0024.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0025.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0026.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0027.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0028.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0029.png')),
+                          pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0030.png')), pygame.image.load(os.path.join(os.path.dirname(__file__), 'Assets','expl_06_0031.png'))]
     if explosion_type == True:
         explosion_value = 1
         explosion_sound1.play()
